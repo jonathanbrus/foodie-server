@@ -19,7 +19,7 @@ App.use(rootRoutes);
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect(process.env.mongoString, {
+  .connect(process.env.MONGO_STRING, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
