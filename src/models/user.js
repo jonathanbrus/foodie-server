@@ -12,6 +12,10 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  phone: {
+    type: Schema.Types.Number,
+    required: true,
+  },
   password: {
     type: Schema.Types.String,
     required: true,

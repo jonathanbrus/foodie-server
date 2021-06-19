@@ -32,6 +32,7 @@ const signIn = async (req, res, nex) => {
         userId: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
+        phone: existingUser.phone,
         userAddress: existingUser.userAddress,
       },
       token: token,
@@ -42,7 +43,7 @@ const signIn = async (req, res, nex) => {
 };
 
 const signUp = async (req, res, nex) => {
-  const { name, email, password } = req.body;
+  const { name, email, phone, password } = req.body;
 
   try {
     const existingUser = await users.findOne({ email: email });
@@ -56,6 +57,7 @@ const signUp = async (req, res, nex) => {
     const newUser = await users.create({
       name: name,
       email: email,
+      phone: phone,
       password: hashed,
     });
 
@@ -67,6 +69,7 @@ const signUp = async (req, res, nex) => {
         userId: newUser._id,
         name: newUser.name,
         email: newUser.email,
+        phone: newUser.phone,
         userAddress: newUser.userAddress,
       },
       token: token,
