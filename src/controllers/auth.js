@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 // model
 const users = require("../models/user");
 // helper
+const generateToken = require("../helpers/generateToken");
 const error = require("../helpers/error");
 
 const signIn = async (req, res, nex) => {
@@ -23,6 +24,8 @@ const signIn = async (req, res, nex) => {
       throw error(401, "Password does not match, try again.");
     }
 
+    const token = generateToken(existingUser._id, existingUser.email);
+
     res.json({
       message: "User authenticated",
       user: {
@@ -31,9 +34,10 @@ const signIn = async (req, res, nex) => {
         email: existingUser.email,
         userAddress: existingUser.userAddress,
       },
+      token: token,
     });
   } catch (e) {
-    console.log(e);
+    res.json(e);
   }
 };
 
@@ -55,6 +59,8 @@ const signUp = async (req, res, nex) => {
       password: hashed,
     });
 
+    const token = generateToken(newUser._id, newUser.email);
+
     res.status(201).json({
       message: "User created.",
       user: {
@@ -63,9 +69,10 @@ const signUp = async (req, res, nex) => {
         email: newUser.email,
         userAddress: newUser.userAddress,
       },
+      token: token,
     });
   } catch (e) {
-    console.log(e);
+    res.json(e);
   }
 };
 
