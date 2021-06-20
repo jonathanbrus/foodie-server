@@ -31,7 +31,7 @@ const placeOrder = async (req, res, nex) => {
     const parsedOrderItems = JSON.parse(orderItems);
     const parsedAddress = JSON.parse(shippingAddress);
 
-    console.log([...parsedOrderItems]);
+    // console.log([...parsedOrderItems]);
 
     const newOrder = await orders.create({
       userId: userId,
