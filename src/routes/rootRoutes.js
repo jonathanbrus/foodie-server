@@ -10,7 +10,10 @@ const { getAllProducts } = require("../controllers/products");
 
 const router = express.Router();
 
-router.get("/", (req, res) => res.send("server is running"));
+router.get("/", (req, res) => {
+  req.headers.authorization;
+  res.send("server is running");
+});
 
 router.post("/sign-in", signIn);
 

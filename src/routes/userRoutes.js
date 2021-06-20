@@ -1,5 +1,7 @@
 const express = require("express");
 
+const authMiddleware = require("../middlewares/authMiddleware");
+
 const { updateProfile, addAddress } = require("../controllers/userProfile");
 
 const {
@@ -8,20 +10,22 @@ const {
   modifyQuantity,
 } = require("../controllers/carts");
 
-const { placeOrder } = require("../controllers/orders");
+const { myOrders, placeOrder } = require("../controllers/orders");
 
 const router = express.Router();
 
-router.post("/updateProfile", updateProfile);
+router.post("/updateProfile", authMiddleware, updateProfile);
 
-router.post("/addAddress", addAddress);
+router.post("/addAddress", authMiddleware, addAddress);
 
-router.post("/addToCart", addToCart);
+router.post("/addToCart", authMiddleware, addToCart);
 
-router.delete("/removeFromCart", removeFromCart);
+router.delete("/removeFromCart", authMiddleware, removeFromCart);
 
-router.post("/modifyQuantity", modifyQuantity);
+router.post("/modifyQuantity", authMiddleware, modifyQuantity);
 
-router.post("/placeOrder", placeOrder);
+router.get("/myOrders", authMiddleware, myOrders);
+
+router.post("/placeOrder", authMiddleware, placeOrder);
 
 module.exports = router;

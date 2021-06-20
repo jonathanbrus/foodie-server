@@ -1,5 +1,20 @@
 const orders = require("../models/order");
 
+const myOrders = async (req, res, nex) => {
+  try {
+    const allOrders = await orders.find({ userId: req.userId });
+
+    console.log(allOrders);
+
+    res.json({
+      message: "Fetched all orders",
+      myOrders: allOrders,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const placeOrder = async (req, res, nex) => {
   const {
     userId,
@@ -73,6 +88,7 @@ const updateOrder = async (req, res, nex) => {
 };
 
 module.exports = {
+  myOrders: myOrders,
   placeOrder: placeOrder,
   updateOrder: updateOrder,
 };
