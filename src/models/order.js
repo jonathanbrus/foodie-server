@@ -16,12 +16,20 @@ const orderSchema = new Schema(
     orderItems: [
       {
         name: { type: Schema.Types.String, required: true },
-        qty: { type: Schema.Types.Number, required: true },
         image: { type: Schema.Types.String, required: true },
         price: { type: Schema.Types.Number, required: true },
+        quantity: { type: Schema.Types.Number, required: true },
       },
     ],
     shippingAddress: {
+      name: {
+        type: Schema.Types.String,
+        required: true,
+      },
+      phone: {
+        type: Schema.Types.Number,
+        required: true,
+      },
       landmark: {
         type: Schema.Types.String,
       },
@@ -63,6 +71,11 @@ const orderSchema = new Schema(
       type: Schema.Types.Boolean,
       required: true,
       default: false,
+    },
+    orderStatus: {
+      type: Schema.Types.String,
+      required: true,
+      default: "order placed",
     },
     isDelivered: {
       type: Schema.Types.Boolean,

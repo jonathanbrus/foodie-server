@@ -23,6 +23,8 @@ const placeOrder = async (req, res, nex) => {
       isFood: isFood,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
+        name: parsedAddress["name"],
+        phone: parsedAddress["phone"],
         landmark: parsedAddress["landmark"],
         address: parsedAddress["address"],
         city: parsedAddress["city"],
