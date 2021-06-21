@@ -13,6 +13,7 @@ const orderSchema = new Schema(
       type: Schema.Types.Boolean,
       required: true,
     },
+    restaurantName: { type: Schema.Types.String },
     orderItems: [
       {
         name: { type: Schema.Types.String, required: true },

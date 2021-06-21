@@ -19,6 +19,7 @@ const placeOrder = async (req, res, nex) => {
   const {
     userId,
     isFood,
+    restaurantName,
     orderItems,
     shippingAddress,
     paymentMethod,
@@ -36,6 +37,7 @@ const placeOrder = async (req, res, nex) => {
     const newOrder = await orders.create({
       userId: userId,
       isFood: isFood,
+      restaurantName: restaurantName,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
         name: parsedAddress["name"],
