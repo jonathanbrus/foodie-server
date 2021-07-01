@@ -1,14 +1,27 @@
 const orders = require("../models/order");
 
-const myOrders = async (req, res, nex) => {
+const allOrders = async (req, res, nex) => {
   try {
-    const allOrders = await orders.find({ userId: req.userId });
-
-    console.log(allOrders);
+    const allOrder = await orders.find();
 
     res.json({
       message: "Fetched all orders",
-      myOrders: allOrders,
+      allOrders: allOrder.reverse(),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const myOrders = async (req, res, nex) => {
+  try {
+    const myAllOrders = await orders.find({ userId: req.userId });
+
+    console.log(myAllOrders);
+
+    res.json({
+      message: "Fetched all orders",
+      myOrders: myAllOrders,
     });
   } catch (e) {
     console.log(e);
@@ -90,6 +103,7 @@ const updateOrder = async (req, res, nex) => {
 };
 
 module.exports = {
+  allOrders: allOrders,
   myOrders: myOrders,
   placeOrder: placeOrder,
   updateOrder: updateOrder,

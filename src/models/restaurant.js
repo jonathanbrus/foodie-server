@@ -33,14 +33,12 @@ const restaurantSchema = new Schema({
       required: true,
     },
   },
-  isActive: {
-    type: Schema.Types.Boolean,
-    required: true,
-  },
+  isActive: { type: Schema.Types.Boolean },
   timing: {
     from: { type: Schema.Types.Number },
     to: { type: Schema.Types.Number },
   },
+  rating: { type: Schema.Types.Number },
 });
 
 module.exports = mongoose.model("restaurants", restaurantSchema);

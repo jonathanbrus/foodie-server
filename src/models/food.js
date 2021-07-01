@@ -15,6 +15,10 @@ const foodSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+  category: {
+    type: Schema.Types.String,
+    required: true,
+  },
   fixedPrice: {
     type: Schema.Types.Number,
     required: true,
@@ -23,14 +27,11 @@ const foodSchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
-  isActive: {
-    type: Schema.Types.Boolean,
-    required: true,
+  availabilityTiming: {
+    from: { type: Schema.Types.Number },
+    to: { type: Schema.Types.Number },
   },
-  category: {
-    type: Schema.Types.String,
-    required: true,
-  },
+  isActive: { type: Schema.Types.Boolean },
   rating: {
     type: Schema.Types.Number,
     required: true,

@@ -18,6 +18,8 @@ const {
   deleteProduct,
 } = require("../controllers/products");
 
+const { allOrders, updateOrder } = require("../controllers/orders");
+
 const router = express.Router();
 
 router.post("/addRestaurant", addRestaurant);
@@ -37,5 +39,9 @@ router.post("/addNewProduct", addNewProduct);
 router.post("/updateProduct", updateProduct);
 
 router.delete("/deleteProduct", deleteProduct);
+
+router.get("/allOrders", allOrders);
+
+router.post("/updateOrder", updateOrder);
 
 module.exports = router;

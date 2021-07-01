@@ -11,7 +11,6 @@ const { getAllProducts } = require("../controllers/products");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  req.headers.authorization;
   res.send("server is running");
 });
 
