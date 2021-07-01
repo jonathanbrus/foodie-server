@@ -16,6 +16,8 @@ const getAllFooItems = async (req, res, nex) => {
 const addNewFoodItem = async (req, res, nex) => {
   const { foodInfo } = req.body;
 
+  console.log();
+
   try {
     const newFood = await foods.create({
       name: foodInfo.name.trim(),
@@ -30,7 +32,7 @@ const addNewFoodItem = async (req, res, nex) => {
       },
       isActive: true,
       rating: 4.1,
-      restaurantId: "60d97f4b46605f9022d1e784",
+      restaurantId: foodInfo.restaurantId.trim(),
     });
 
     res.json({
