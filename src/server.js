@@ -8,7 +8,7 @@ const App = express();
 dotenv.config();
 
 App.use(helmet());
-App.use(cors());
+App.use(cors({ origin: "https://alo-foodie-dashboard.netlify.app" }));
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 
