@@ -6,7 +6,7 @@ const getAllRestaurants = async (req, res, nex) => {
 
     res.json({
       message: "Fetched all restaurants",
-      allRestaurants: allRestaurants.reverse(),
+      allRestaurants: allRestaurants.sort(() => Math.random() - 0.5),
     });
   } catch (e) {
     console.log(e);
