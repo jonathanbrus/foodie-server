@@ -4,7 +4,7 @@ const getAllFoodItems = async (req, res, nex) => {
   try {
     const allFoods = await foods.find();
 
-    res.header("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Origin", "*");
 
     res.json({
       message: "Fetched all foods",
