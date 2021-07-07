@@ -20,7 +20,7 @@ router.post("/sign-up", signUp);
 
 router.get("/getAllRestaurants", getAllRestaurants);
 
-router.get("/getAllFooItems", getAllFooItems);
+router.get("/getAllFoodItems", getAllFooItems);
 
 router.get("/getAllProducts", getAllProducts);
 

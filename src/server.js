@@ -16,9 +16,9 @@ App.use(helmet());
 //   next();
 // });
 
-App.use(cors({ origin: "*" }));
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
+App.use(cors({ origin: "*" }));
 
 const rootRoutes = require("./routes/rootRoutes");
 
