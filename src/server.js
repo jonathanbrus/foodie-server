@@ -9,14 +9,14 @@ dotenv.config();
 
 App.use(helmet());
 
-App.use("*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// App.use("*", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type");
+//   next();
+// });
 
-// App.use(cors({ origin: "*" }));
+App.use(cors({ origin: "*" }));
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 
