@@ -6,7 +6,7 @@ const getAllFoodItems = async (req, res, nex) => {
 
     res.json({
       message: "Fetched all foods",
-      allFoods: allFoods.reverse(),
+      allFoods: allFoods.sort(() => Math.random() - 0.5),
     });
   } catch (e) {
     console.log(e);
