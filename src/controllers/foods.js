@@ -4,6 +4,8 @@ const getAllFoodItems = async (req, res, nex) => {
   try {
     const allFoods = await foods.find();
 
+    res.header("Access-Control-Allow-Origin", "*");
+
     res.json({
       message: "Fetched all foods",
       allFoods: allFoods.sort(() => Math.random() - 0.5),

@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const App = express();
 dotenv.config();
 
-App.use(cors({ origin: ["*", "https://alo-foodie-dashboard.netlify.app/"] }));
+App.use(cors({ origin: "*" }));
 
 App.use(helmet());
 App.use(express.json());
