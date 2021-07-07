@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const App = express();
 dotenv.config();
 
-App.use(cors({ origin: "*" }));
+App.use(cors());
 
 App.use(helmet());
 App.use(express.json());

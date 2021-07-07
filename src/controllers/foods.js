@@ -4,8 +4,6 @@ const getAllFoodItems = async (req, res, nex) => {
   try {
     const allFoods = await foods.find();
 
-    res.set("Access-Control-Allow-Origin", "*");
-
     res.json({
       message: "Fetched all foods",
       allFoods: allFoods.sort(() => Math.random() - 0.5),
@@ -17,8 +15,6 @@ const getAllFoodItems = async (req, res, nex) => {
 
 const addNewFoodItem = async (req, res, nex) => {
   const { foodInfo } = req.body;
-
-  console.log();
 
   try {
     const newFood = await foods.create({
