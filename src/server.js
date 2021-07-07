@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const App = express();
 dotenv.config();
 
-// App.use(helmet());
+App.use(helmet());
 
 // app.use(function (req, res, next) {
 //   // Website you wish to allow to connect
@@ -36,11 +36,7 @@ dotenv.config();
 //   next();
 // });
 
-App.use(
-  cors({
-    origin: "https://alo-foodie-dashboard.netlify.app",
-  })
-);
+App.use(cors());
 App.use(express.json());
 App.use(express.urlencoded({ extended: false }));
 
