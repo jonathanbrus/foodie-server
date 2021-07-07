@@ -4,7 +4,7 @@ const { signIn, signUp } = require("../controllers/auth");
 
 const { getAllRestaurants } = require("../controllers/restaurants");
 
-const { getAllFooItems } = require("../controllers/foods");
+const { getAllFoodItems } = require("../controllers/foods");
 
 const { getAllProducts } = require("../controllers/products");
 
@@ -20,7 +20,7 @@ router.post("/sign-up", signUp);
 
 router.get("/getAllRestaurants", getAllRestaurants);
 
-router.get("/getAllFoodItems", getAllFooItems);
+router.get("/getAllFoodItems", getAllFoodItems);
 
 router.get("/getAllProducts", getAllProducts);
 

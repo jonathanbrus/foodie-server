@@ -1,6 +1,6 @@
 const foods = require("../models/food");
 
-const getAllFooItems = async (req, res, nex) => {
+const getAllFoodItems = async (req, res, nex) => {
   try {
     const allFoods = await foods.find();
 
@@ -61,7 +61,7 @@ const deleteFoodItem = async (req, res, nex) => {
 };
 
 module.exports = {
-  getAllFooItems: getAllFooItems,
+  getAllFoodItems: getAllFoodItems,
   addNewFoodItem: addNewFoodItem,
   updateFoodItem: updateFoodItem,
   deleteFoodItem: deleteFoodItem,
