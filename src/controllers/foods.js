@@ -1,12 +1,14 @@
 const foods = require("../models/food");
 
-const getAllFoodItems = async (req, res, nex) => {
+const getFoodItemsByResId = async (req, res, nex) => {
+  const { resId } = req.query;
+
   try {
-    const allFoods = await foods.find();
+    const allFoods = await foods.find({ restaurantId: resId });
 
     res.json({
       message: "Fetched all foods",
-      allFoods: allFoods.sort(() => Math.random() - 0.5),
+      allFoods: allFoods.reverse(),
     });
   } catch (e) {
     console.log(e);
@@ -59,7 +61,7 @@ const deleteFoodItem = async (req, res, nex) => {
 };
 
 module.exports = {
-  getAllFoodItems: getAllFoodItems,
+  getFoodItemsByResId: getFoodItemsByResId,
   addNewFoodItem: addNewFoodItem,
   updateFoodItem: updateFoodItem,
   deleteFoodItem: deleteFoodItem,
