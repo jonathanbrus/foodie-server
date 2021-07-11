@@ -49,12 +49,14 @@ const placeOrder = async (req, res, nex) => {
       buyFrom: restaurantName,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
-        fullName: parsedAddress["fullName"],
-        phone: parsedAddress["phoneNo"],
-        pincode: parsedAddress["pincode"],
-        address: parsedAddress["doorNo"] + " - " + parsedAddress["street"],
+        fullName: parsedAddress["fullName"] || parsedAddress["name"],
+        phone: parsedAddress["phoneNo"] || parsedAddress["phone"],
+        pincode: parsedAddress["pincode"] || 629702,
+        address:
+          parsedAddress["doorNo"] + " - " + parsedAddress["street"] ||
+          parsedAddress["address"],
         city: parsedAddress["city"],
-        state: parsedAddress["state"],
+        state: parsedAddress["state"] || "Tamil Nadu",
       },
       paymentMethod: paymentMethod,
       taxPrice: taxPrice,
