@@ -13,7 +13,7 @@ const orderSchema = new Schema(
       type: Schema.Types.Boolean,
       required: true,
     },
-    restaurantName: { type: Schema.Types.String },
+    buyFrom: { type: Schema.Types.String },
     orderItems: [
       {
         name: { type: Schema.Types.String, required: true },
@@ -23,7 +23,7 @@ const orderSchema = new Schema(
       },
     ],
     shippingAddress: {
-      name: {
+      fullName: {
         type: Schema.Types.String,
         required: true,
       },
@@ -31,14 +31,19 @@ const orderSchema = new Schema(
         type: Schema.Types.Number,
         required: true,
       },
-      landmark: {
+      pincode: {
         type: Schema.Types.String,
+        required: true,
       },
       address: {
         type: Schema.Types.String,
         required: true,
       },
       city: {
+        type: Schema.Types.String,
+        required: true,
+      },
+      state: {
         type: Schema.Types.String,
         required: true,
       },

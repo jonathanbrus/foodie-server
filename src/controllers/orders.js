@@ -17,11 +17,9 @@ const myOrders = async (req, res, nex) => {
   try {
     const myAllOrders = await orders.find({ userId: req.userId });
 
-    console.log(myAllOrders);
-
     res.json({
       message: "Fetched all orders",
-      myOrders: myAllOrders,
+      myOrders: myAllOrders.reverse(),
     });
   } catch (e) {
     console.log(e);
@@ -45,19 +43,18 @@ const placeOrder = async (req, res, nex) => {
     const parsedOrderItems = JSON.parse(orderItems);
     const parsedAddress = JSON.parse(shippingAddress);
 
-    // console.log([...parsedOrderItems]);
-
     const newOrder = await orders.create({
       userId: userId,
       isFood: isFood,
-      restaurantName: restaurantName,
+      buyFrom: restaurantName,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
-        name: parsedAddress["name"],
-        phone: parsedAddress["phone"],
-        landmark: parsedAddress["landmark"],
-        address: parsedAddress["address"],
+        fullName: parsedAddress["fullName"],
+        phone: parsedAddress["phoneNo"],
+        pincode: parsedAddress["pincode"],
+        address: parsedAddress["doorNo"] + " - " + parsedAddress["street"],
         city: parsedAddress["city"],
+        state: parsedAddress["state"],
       },
       paymentMethod: paymentMethod,
       taxPrice: taxPrice,
