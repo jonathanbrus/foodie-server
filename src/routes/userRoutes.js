@@ -2,7 +2,11 @@ const express = require("express");
 
 const authMiddleware = require("../middlewares/authMiddleware");
 
-const { updateProfile, addAddress } = require("../controllers/userProfile");
+const {
+  updateProfile,
+  addAddress,
+  deleteAddress,
+} = require("../controllers/userProfile");
 
 const {
   addToCart,
@@ -17,6 +21,8 @@ const router = express.Router();
 router.post("/updateProfile", authMiddleware, updateProfile);
 
 router.post("/addAddress", authMiddleware, addAddress);
+
+router.post("/deleteAddress", authMiddleware, deleteAddress);
 
 router.post("/addToCart", authMiddleware, addToCart);
 

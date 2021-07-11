@@ -39,6 +39,7 @@ const restaurantSchema = new Schema({
     to: { type: Schema.Types.Number },
   },
   rating: { type: Schema.Types.Number },
+  offer: { type: Schema.Types.Number },
 });
 
 module.exports = mongoose.model("restaurants", restaurantSchema);

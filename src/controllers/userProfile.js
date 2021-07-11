@@ -57,6 +57,7 @@ const addAddress = async (req, res, nex) => {
     res.json({
       message: "Added user address",
       addedAddress: {
+        id: addedAddress.userAddress[addedAddress.userAddress.length - 1]._id,
         fullName: fullName,
         phoneNo: phoneNo,
         pincode: pincode,
@@ -71,10 +72,31 @@ const addAddress = async (req, res, nex) => {
   }
 };
 
+const deleteAddress = async (req, res, nex) => {
+  const { index } = req.body;
+
+  try {
+    const user = await users.findById(req.userId);
+
+    if (index > -1) {
+      user.userAddress.splice(Number(index), 1);
+
+      const updated = await user.save();
+    }
+
+    res.json({
+      message: "deleted user address",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const changePassword = (req, res, nex) => {};
 
 module.exports = {
   updateProfile: updateProfile,
   addAddress: addAddress,
+  deleteAddress: deleteAddress,
   changePassword: changePassword,
 };
