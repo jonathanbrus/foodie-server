@@ -26,6 +26,8 @@ const signIn = async (req, res, nex) => {
 
     const token = generateToken(existingUser._id, existingUser.email);
 
+    console.log(existingUser.phone);
+
     res.json({
       message: "User authenticated",
       user: {
