@@ -43,7 +43,17 @@ const placeOrder = async (req, res, nex) => {
     const parsedOrderItems = JSON.parse(orderItems);
     const parsedAddress = JSON.parse(shippingAddress);
 
-    let address = parsedAddress["doorNo"] + " - " + parsedAddress["street"];
+    let address;
+
+    if (
+      (parsedAddress["doorNo"] + " - " + parsedAddress["street"]).includes(
+        "undefined"
+      )
+    ) {
+      address = parsedAddress["address"];
+    } else {
+      address = parsedAddress["doorNo"] + " - " + parsedAddress["street"];
+    }
 
     const newOrder = await orders.create({
       userId: userId,
@@ -54,7 +64,7 @@ const placeOrder = async (req, res, nex) => {
         fullName: parsedAddress["fullName"] || parsedAddress["name"],
         phone: parsedAddress["phoneNo"] || parsedAddress["phone"],
         pincode: parsedAddress["pincode"] || 629702,
-        address: address || parsedAddress["address"],
+        address: address,
         city: parsedAddress["city"],
         state: parsedAddress["state"] || "Tamil Nadu",
       },
