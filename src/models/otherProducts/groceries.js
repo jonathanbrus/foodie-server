@@ -23,8 +23,8 @@ const grocerySchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
-  isActive: {
-    type: Schema.Types.Boolean,
+  itemsInStock: {
+    type: Schema.Types.Number,
     required: true,
   },
   rating: {

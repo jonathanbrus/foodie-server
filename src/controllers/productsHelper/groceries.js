@@ -5,17 +5,17 @@ const addGrocery = async (prodInfo) => {
   try {
     const addedGrocery = await groceries.create({
       name: prodInfo.name,
-      image: prodInfo.image,
+      image: prodInfo.image[0],
       category: prodInfo.category,
       fixedPrice: prodInfo.fixedPrice,
       offerPrice: prodInfo.offerPrice,
-      isActive: true,
+      itemsInStock: prodInfo.itemsInStock,
       rating: 4.1,
     });
 
-    return { result: "added", addedGrocery: addedGrocery };
+    return { result: "added", addedProduct: addedGrocery };
   } catch (e) {
-    return { result: "error", e: e };
+    return { result: "error", message: e.message };
   }
 };
 

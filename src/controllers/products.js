@@ -70,17 +70,17 @@ const addNewProduct = async (req, res, nex) => {
       break;
 
     default:
-      result = await addGrocery(prodInfo);
+      result = { result: "error", message: "something went wrong" };
       break;
   }
 
   if (result.result === "added") {
     res.json({
       message: `Successfully added product to ${category}`,
-      addedProduct: result.addedGrocery,
+      addedProduct: result.addedProduct,
     });
   } else {
-    res.json({ message: result.e.message });
+    res.json({ message: result.message });
   }
 };
 
