@@ -7,7 +7,13 @@ const grocerySchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  image: {
+  image: [
+    {
+      type: Schema.Types.String,
+      required: true,
+    },
+  ],
+  description: {
     type: Schema.Types.String,
     required: true,
   },

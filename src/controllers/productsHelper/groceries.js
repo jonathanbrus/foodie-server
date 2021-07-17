@@ -4,7 +4,7 @@ const addGrocery = async (prodInfo) => {
   try {
     const addedGrocery = await groceries.create({
       name: prodInfo.name,
-      image: prodInfo.image[0],
+      image: prodInfo.image,
       description: prodInfo.description,
       category: prodInfo.category,
       fixedPrice: prodInfo.fixedPrice,
