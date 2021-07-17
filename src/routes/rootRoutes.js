@@ -6,7 +6,7 @@ const { getAllRestaurants } = require("../controllers/restaurants");
 
 const { getFoodItemsByResId } = require("../controllers/foods");
 
-const { getAllProducts } = require("../controllers/products");
+const { getAllProductsByCategory } = require("../controllers/products");
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ router.get("/getAllRestaurants", getAllRestaurants);
 
 router.get("/getFoodItemsByResId", getFoodItemsByResId);
 
-router.get("/getAllProducts", getAllProducts);
+router.get("/getAllProductsByCategory", getAllProductsByCategory);
 
 // Authenticated routes
 

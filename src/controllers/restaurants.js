@@ -19,15 +19,20 @@ const addRestaurant = async (req, res, nex) => {
   try {
     const newRestaurant = await restaurants.create({
       name: restaurantInfo.name.trim(),
-      image: restaurantInfo.image.trim(),
       email: restaurantInfo.email.trim(),
       password: restaurantInfo.password.trim(),
+      image: restaurantInfo.image.trim(),
       restaurantAddress: {
-        landmark: restaurantInfo.restaurantAddress.landmark.trim(),
-        address: restaurantInfo.restaurantAddress.address.trim(),
-        city: restaurantInfo.restaurantAddress.city.trim(),
+        landmark: "alo",
+        address: "alo",
+        city: restaurantInfo.city.trim(),
+      },
+      geoPoint: {
+        lat: Number(restaurantInfo.lat.trim()),
+        long: Number(restaurantInfo.long.trim()),
       },
       isActive: true,
+      offer: Number(restaurantInfo.offer.trim()),
       timing: {
         from: Number(restaurantInfo.timing.from.trim()),
         to: Number(restaurantInfo.timing.to.trim()),

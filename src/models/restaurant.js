@@ -7,10 +7,6 @@ const restaurantSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  image: {
-    type: Schema.Types.String,
-    required: true,
-  },
   email: {
     type: Schema.Types.String,
     required: true,
@@ -20,26 +16,55 @@ const restaurantSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+  image: {
+    type: Schema.Types.String,
+    required: true,
+  },
   restaurantAddress: {
     landmark: {
       type: Schema.Types.String,
     },
     address: {
       type: Schema.Types.String,
-      required: true,
     },
     city: {
       type: Schema.Types.String,
       required: true,
     },
   },
-  isActive: { type: Schema.Types.Boolean },
+  // city: {
+  //   type: Schema.Types.String,
+  //   required: true,
+  // },
+  geoPoint: {
+    lat: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+    long: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+  },
+  isActive: {
+    type: Schema.Types.Boolean,
+    default: true,
+  },
+  offer: {
+    type: Schema.Types.Number,
+    required: true,
+  },
   timing: {
-    from: { type: Schema.Types.Number },
-    to: { type: Schema.Types.Number },
+    from: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+    to: {
+      type: Schema.Types.Number,
+      required: true,
+    },
   },
   rating: { type: Schema.Types.Number },
-  offer: { type: Schema.Types.Number },
 });
 
 module.exports = mongoose.model("restaurants", restaurantSchema);

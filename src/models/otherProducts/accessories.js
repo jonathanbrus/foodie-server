@@ -2,15 +2,17 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const accessorySchema = new Schema({
   name: {
     type: Schema.Types.String,
     required: true,
   },
-  image: {
-    type: Schema.Types.String,
-    required: true,
-  },
+  image: [
+    {
+      type: Schema.Types.String,
+      required: true,
+    },
+  ],
   description: {
     type: Schema.Types.String,
     required: true,
@@ -23,8 +25,8 @@ const productSchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
-  isActive: {
-    type: Schema.Types.Boolean,
+  itemsInStock: {
+    type: Schema.Types.Number,
     required: true,
   },
   category: {
@@ -37,4 +39,4 @@ const productSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("products", productSchema);
+module.exports = mongoose.model("accessories", accessorySchema);
