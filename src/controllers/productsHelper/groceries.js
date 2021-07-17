@@ -1,11 +1,11 @@
 const groceries = require("../../models/otherProducts/groceries");
 
 const addGrocery = async (prodInfo) => {
-  console.log(prodInfo);
   try {
     const addedGrocery = await groceries.create({
       name: prodInfo.name,
       image: prodInfo.image[0],
+      description: prodInfo.description,
       category: prodInfo.category,
       fixedPrice: prodInfo.fixedPrice,
       offerPrice: prodInfo.offerPrice,

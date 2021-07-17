@@ -1,8 +1,9 @@
 const cosmetics = require("../../models/otherProducts/cosmetics");
 
 const addCosmetics = async (prodInfo) => {
+  console.log(prodInfo);
   try {
-    const addedCosmetics = await groceries.create({
+    const addedCosmetics = await cosmetics.create({
       name: prodInfo.name,
       image: prodInfo.image,
       description: prodInfo.description,
@@ -15,6 +16,7 @@ const addCosmetics = async (prodInfo) => {
 
     return { result: "added", addedProduct: addedCosmetics };
   } catch (e) {
+    console.log(e);
     return { result: "error", e: e };
   }
 };
