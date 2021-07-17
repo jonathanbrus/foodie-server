@@ -77,7 +77,7 @@ const addNewProduct = async (req, res, nex) => {
   if (result.result === "added") {
     res.json({
       message: `Successfully added product to ${category}`,
-      addedProduct: result,
+      addedProduct: result.addedGrocery,
     });
   } else {
     res.json({ message: result.e.message });
