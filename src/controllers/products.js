@@ -1,4 +1,4 @@
-const otherProducts = require("../models/otherProducts");
+const otherProducts = require("../models/products");
 
 const getAllProductsByCategory = async (req, res, nex) => {
   const { category } = req.query;
@@ -17,10 +17,12 @@ const addNewProduct = async (req, res, nex) => {
       name: prodInfo.name,
       image: prodInfo.image,
       description: prodInfo.description,
+      productDetail: prodInfo.productDetail,
       category: category,
       subCategory: prodInfo.category,
       fixedPrice: prodInfo.fixedPrice,
       offerPrice: prodInfo.offerPrice,
+      deliveryCharge: prodInfo.deliveryCharge,
       itemsInStock: prodInfo.itemsInStock,
       rating: 4.2,
     });

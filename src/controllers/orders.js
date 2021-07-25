@@ -1,4 +1,5 @@
 const orders = require("../models/order");
+const carts = require("../models/cart");
 
 const allOrders = async (req, res, nex) => {
   try {
@@ -6,7 +7,8 @@ const allOrders = async (req, res, nex) => {
 
     res.json({
       message: "Fetched all orders",
-      allOrders: allOrder.reverse(),
+      allOrders: allOrder.reverse().slice(0, 50),
+      totalOrders: allOrder.length,
     });
   } catch (e) {
     console.log(e);
@@ -30,13 +32,13 @@ const placeOrder = async (req, res, nex) => {
   const {
     userId,
     isFood,
-    restaurantName,
+    buyFrom,
     orderItems,
     shippingAddress,
     paymentMethod,
-    taxPrice,
-    deliveryPrice,
-    totalPrice,
+    taxAmount,
+    deliveryCharge,
+    totalAmount,
   } = req.body;
 
   try {
@@ -58,7 +60,7 @@ const placeOrder = async (req, res, nex) => {
     const newOrder = await orders.create({
       userId: userId,
       isFood: isFood,
-      buyFrom: restaurantName,
+      buyFrom: buyFrom,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
         fullName: parsedAddress["fullName"] || parsedAddress["name"],
@@ -69,13 +71,14 @@ const placeOrder = async (req, res, nex) => {
         state: parsedAddress["state"] || "Tamil Nadu",
       },
       paymentMethod: paymentMethod,
-      taxPrice: taxPrice,
-      deliveryPrice: deliveryPrice,
-      totalPrice: totalPrice,
       isPaid: false,
-      isDelivered: false,
+      taxAmount: taxAmount,
+      deliveryCharge: deliveryCharge,
+      totalAmount: totalAmount,
       deliveredAt: "",
     });
+
+    await carts.deleteOne({ userId: userId });
 
     res.json({
       message: "Order placed",
@@ -87,7 +90,7 @@ const placeOrder = async (req, res, nex) => {
 };
 
 const updateOrder = async (req, res, nex) => {
-  const { orderId, isPaid, isDelivered, deliveredAt } = req.body;
+  const { orderId, isPaid, orderStatus } = req.body;
 
   try {
     const order = await orders.findById(orderId);
@@ -97,8 +100,7 @@ const updateOrder = async (req, res, nex) => {
     }
 
     order.isPaid = isPaid || order.isPaid;
-    order.isDelivered = isDelivered || order.isDelivered;
-    order.deliveredAt = deliveredAt || order.deliveredAt;
+    order.orderStatus = orderStatus || order.orderStatus;
 
     const updatedOrder = await order.save();
 
@@ -111,9 +113,33 @@ const updateOrder = async (req, res, nex) => {
   }
 };
 
+const cancelOrder = async (req, res, nex) => {
+  const { orderId } = req.body;
+
+  try {
+    const order = await orders.findById(orderId);
+
+    if (!order) {
+      throw error(404, "Order not found.");
+    }
+
+    order.orderStatus = "Canceled" || order.orderStatus;
+
+    const CanceledOrder = await order.save();
+
+    res.json({
+      message: "Canceled order successfully.",
+      CanceledOrder: CanceledOrder,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 module.exports = {
   allOrders: allOrders,
   myOrders: myOrders,
   placeOrder: placeOrder,
+  cancelOrder: cancelOrder,
   updateOrder: updateOrder,
 };

@@ -26,6 +26,7 @@ const addNewFoodItem = async (req, res, nex) => {
       category: foodInfo.category.trim(),
       fixedPrice: foodInfo.fixedPrice.trim(),
       offerPrice: foodInfo.offerPrice.trim(),
+      packagingCharge: foodInfo.packagingCharge.trim(),
       availabilityTiming: {
         from: foodInfo.availabilityTiming.from.trim(),
         to: foodInfo.availabilityTiming.to.trim(),

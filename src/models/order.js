@@ -13,7 +13,7 @@ const orderSchema = new Schema(
       type: Schema.Types.Boolean,
       required: true,
     },
-    buyFrom: { type: Schema.Types.String },
+    buyFrom: { type: Schema.Types.String, required: true },
     orderItems: [
       {
         name: { type: Schema.Types.String, required: true },
@@ -58,35 +58,28 @@ const orderSchema = new Schema(
     //   update_time: { type: String },
     //   email_address: { type: String },
     // },
-    taxPrice: {
-      type: Schema.Types.Number,
-      required: true,
-      default: 0.0,
-    },
-    deliveryPrice: {
-      type: Schema.Types.Number,
-      required: true,
-      default: 0.0,
-    },
-    totalPrice: {
-      type: Schema.Types.Number,
-      required: true,
-      default: 0.0,
-    },
     isPaid: {
       type: Schema.Types.Boolean,
       required: true,
       default: false,
     },
+    taxAmount: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+    deliveryCharge: {
+      type: Schema.Types.Number,
+      required: true,
+    },
+    totalAmount: {
+      type: Schema.Types.Number,
+      required: true,
+    },
     orderStatus: {
       type: Schema.Types.String,
+      enum: ["Order placed", "Packed", "Delivered", "Canceled"],
+      default: "Order placed",
       required: true,
-      default: "order placed",
-    },
-    isDelivered: {
-      type: Schema.Types.Boolean,
-      required: true,
-      default: false,
     },
     deliveredAt: {
       type: Schema.Types.Date,

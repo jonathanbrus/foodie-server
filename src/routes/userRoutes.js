@@ -9,6 +9,7 @@ const {
 } = require("../controllers/userProfile");
 
 const {
+  myCart,
   addToCart,
   removeFromCart,
   modifyQuantity,
@@ -23,6 +24,8 @@ router.post("/updateProfile", authMiddleware, updateProfile);
 router.post("/addAddress", authMiddleware, addAddress);
 
 router.post("/deleteAddress", authMiddleware, deleteAddress);
+
+router.get("/myCart", authMiddleware, myCart);
 
 router.post("/addToCart", authMiddleware, addToCart);
 

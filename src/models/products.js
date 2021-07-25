@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const grocerySchema = new Schema({
+const otherProductsSchema = new Schema({
   name: {
     type: Schema.Types.String,
     required: true,
@@ -17,10 +17,12 @@ const grocerySchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  category: {
-    type: Schema.Types.String,
-    required: true,
-  },
+  productDetail: [
+    {
+      type: Schema.Types.String,
+      required: true,
+    },
+  ],
   fixedPrice: {
     type: Schema.Types.Number,
     required: true,
@@ -29,8 +31,20 @@ const grocerySchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
+  deliveryCharge: {
+    type: Schema.Types.Number,
+    required: true,
+  },
   itemsInStock: {
     type: Schema.Types.Number,
+    required: true,
+  },
+  category: {
+    type: Schema.Types.String,
+    required: true,
+  },
+  subCategory: {
+    type: Schema.Types.String,
     required: true,
   },
   rating: {
@@ -39,4 +53,4 @@ const grocerySchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("groceries", grocerySchema);
+module.exports = mongoose.model("products", otherProductsSchema);
