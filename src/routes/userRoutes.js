@@ -15,7 +15,7 @@ const {
   modifyQuantity,
 } = require("../controllers/carts");
 
-const { myOrders, placeOrder } = require("../controllers/orders");
+const { myOrders, placeOrder, cancelOrder } = require("../controllers/orders");
 
 const router = express.Router();
 
@@ -36,5 +36,7 @@ router.post("/modifyQuantity", authMiddleware, modifyQuantity);
 router.get("/myOrders", authMiddleware, myOrders);
 
 router.post("/placeOrder", authMiddleware, placeOrder);
+
+router.delete("/cancelOrder", authMiddleware, cancelOrder);
 
 module.exports = router;
