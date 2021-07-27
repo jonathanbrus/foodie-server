@@ -46,16 +46,43 @@ const addNewFoodItem = async (req, res, nex) => {
 };
 
 const updateFoodItem = async (req, res, nex) => {
+  const { foodInfo } = req.body;
+
   try {
-    const updatedFood = await foods;
+    const fetchedFood = await foods.findById(foodInfo.id);
+    fetchedFood.name = foodInfo.name.trim() || fetchedFood.name;
+    fetchedFood.image = foodInfo.image.trim() || fetchedFood.image;
+    fetchedFood.description =
+      foodInfo.description.trim() || fetchedFood.description;
+    fetchedFood.category = foodInfo.category.trim() || fetchedFood.category;
+    fetchedFood.fixedPrice = foodInfo.fixedPrice || fetchedFood.fixedPrice;
+    fetchedFood.offerPrice = foodInfo.offerPrice || fetchedFood.offerPrice;
+    fetchedFood.packagingCharge =
+      foodInfo.packagingCharge || fetchedFood.packagingCharge;
+    fetchedFood.availabilityTiming.from =
+      foodInfo.availabilityTiming.from || fetchedFood.availabilityTiming.from;
+    fetchedFood.availabilityTiming.to =
+      foodInfo.availabilityTiming.to || fetchedFood.availabilityTiming.to;
+
+    const updatedFood = await fetchedFood.save();
+
+    res.json({
+      message: "Updated food successfully",
+      updatedFood: updatedFood,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
 const deleteFoodItem = async (req, res, nex) => {
+  const { foodId } = req.query;
   try {
-    const deletedFood = await foods;
+    await foods.deleteOne({ _id: foodId });
+
+    res.json({
+      message: "Successfully deleted food",
+    });
   } catch (e) {
     console.log(e);
   }

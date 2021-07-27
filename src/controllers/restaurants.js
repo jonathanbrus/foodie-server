@@ -49,7 +49,42 @@ const addRestaurant = async (req, res, nex) => {
   }
 };
 
-const updateRestaurant = async (req, res, nex) => {};
+const updateRestaurant = async (req, res, nex) => {
+  const { restaurantInfo } = req.body;
+
+  try {
+    const fetchedRestaurant = await restaurants.findById(restaurantInfo.id);
+
+    (fetchedRestaurant.name =
+      restaurantInfo.name.trim() || fetchedRestaurant.name),
+      (fetchedRestaurant.email =
+        restaurantInfo.email.trim() || fetchedRestaurant.email),
+      (fetchedRestaurant.password =
+        restaurantInfo.password.trim() || fetchedRestaurant.password),
+      (fetchedRestaurant.image =
+        restaurantInfo.image.trim() || fetchedRestaurant.image),
+      (fetchedRestaurant.restaurantAddress.city =
+        restaurantInfo.city.trim() || fetchedRestaurant.restaurantAddress.city);
+    fetchedRestaurant.geoPoint.lat =
+      Number(restaurantInfo.lat) || fetchedRestaurant.geoPoint.lat;
+    fetchedRestaurant.geoPoint.long =
+      Number(restaurantInfo.long) || fetchedRestaurant.geoPoint.long;
+    fetchedRestaurant.offer = restaurantInfo.offer || fetchedRestaurant.offer;
+    fetchedRestaurant.timing.from =
+      Number(restaurantInfo.timing.from) || fetchedRestaurant.timing.from;
+    fetchedRestaurant.timing.to =
+      Number(restaurantInfo.timing.to) || fetchedRestaurant.timing.to;
+
+    const updatedRestaurant = await fetchedRestaurant.save();
+
+    res.json({
+      message: "Successfully updated restaurant",
+      updatedRestaurant: updatedRestaurant,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const deleteRestaurant = async (req, res, nex) => {};
 

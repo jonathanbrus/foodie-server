@@ -12,6 +12,7 @@ const getAllProductsByCategory = async (req, res, nex) => {
 
 const addNewProduct = async (req, res, nex) => {
   const { category, prodInfo } = req.body;
+  console.log(prodInfo);
   try {
     const addedProduct = await otherProducts.create({
       name: prodInfo.name,
