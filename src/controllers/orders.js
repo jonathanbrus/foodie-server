@@ -90,7 +90,7 @@ const placeOrder = async (req, res, nex) => {
 };
 
 const updateOrder = async (req, res, nex) => {
-  const { orderId, isPaid, orderStatus } = req.body;
+  const { orderId, isPaid, orderStatus, ifNeeded } = req.body;
 
   try {
     const order = await orders.findById(orderId);
@@ -101,6 +101,10 @@ const updateOrder = async (req, res, nex) => {
 
     order.isPaid = isPaid || order.isPaid;
     order.orderStatus = orderStatus || order.orderStatus;
+
+    order.taxAmount = ifNeeded.taxPrice || order.taxAmount;
+    order.deliveryCharge = ifNeeded.deliveryPrice || order.deliveryCharge;
+    order.totalAmount = ifNeeded.totalPrice || order.totalAmount;
 
     const updatedOrder = await order.save();
 
