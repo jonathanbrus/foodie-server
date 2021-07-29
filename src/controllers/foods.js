@@ -8,7 +8,7 @@ const getFoodItemsByResId = async (req, res, nex) => {
 
     res.json({
       message: "Fetched all foods",
-      allFoods: allFoods.reverse(),
+      allFoods: allFoods,
     });
   } catch (e) {
     console.log(e);
