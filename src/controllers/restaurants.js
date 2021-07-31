@@ -88,9 +88,28 @@ const updateRestaurant = async (req, res, nex) => {
 
 const deleteRestaurant = async (req, res, nex) => {};
 
+const toggleActiveRestaurant = async (req, res, nex) => {
+  const { resId } = req.body;
+  try {
+    const fetchedRestaurant = await restaurants.findById(resId);
+
+    fetchedRestaurant.isActive = !fetchedRestaurant.isActive;
+
+    const udpdated = await fetchedRestaurant.save();
+
+    res.json({
+      message: `Updated to ${udpdated.isActive}`,
+      udpdated: udpdated.isActive,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 module.exports = {
   getAllRestaurants: getAllRestaurants,
   addRestaurant: addRestaurant,
   updateRestaurant: updateRestaurant,
+  toggleActiveRestaurant: toggleActiveRestaurant,
   deleteRestaurant: deleteRestaurant,
 };

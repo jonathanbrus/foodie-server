@@ -4,6 +4,7 @@ const {
   addRestaurant,
   updateRestaurant,
   deleteRestaurant,
+  toggleActiveRestaurant,
 } = require("../controllers/restaurants");
 
 const {
@@ -27,6 +28,8 @@ router.post("/addRestaurant", addRestaurant);
 router.post("/updateRestaurant", updateRestaurant);
 
 router.delete("/deleteRestaurant", deleteRestaurant);
+
+router.post("/toggleActiveRestaurant", toggleActiveRestaurant);
 
 router.post("/addNewFoodItem", addNewFoodItem);
 
