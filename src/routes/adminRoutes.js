@@ -23,6 +23,10 @@ const { allOrders, updateOrder } = require("../controllers/orders");
 
 const router = express.Router();
 
+router.post("/add-images");
+
+router.delete("/delete-images");
+
 router.post("/addRestaurant", addRestaurant);
 
 router.post("/updateRestaurant", updateRestaurant);
