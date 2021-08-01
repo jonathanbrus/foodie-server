@@ -7,7 +7,7 @@ const allOrders = async (req, res, nex) => {
 
     res.json({
       message: "Fetched all orders",
-      allOrders: allOrder.reverse().slice(0, 100),
+      allOrders: allOrder.reverse(),
       totalOrders: allOrder.length,
     });
   } catch (e) {
