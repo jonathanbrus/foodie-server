@@ -48,8 +48,6 @@ const addNewFoodItem = async (req, res, nex) => {
 const updateFoodItem = async (req, res, nex) => {
   const { foodInfo } = req.body;
 
-  console.log(foodInfo);
-
   try {
     const fetchedFood = await foods.findById(foodInfo.id);
     fetchedFood.name = foodInfo.name.trim() || fetchedFood.name;
