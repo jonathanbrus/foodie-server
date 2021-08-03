@@ -29,6 +29,7 @@ const foodSchema = new Schema({
   },
   packagingCharge: {
     type: Schema.Types.Number,
+    default: 0,
     required: true,
   },
   availabilityTiming: {
