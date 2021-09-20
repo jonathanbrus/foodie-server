@@ -26,7 +26,11 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    App.listen(PORT, console.log(`server running on port ${PORT}`));
+    App.listen(
+      PORT,
+      "0.0.0.0" || "localhost",
+      console.log(`server running on port ${PORT}`)
+    );
   })
   .catch((err) => {
     console.log(err);

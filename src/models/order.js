@@ -20,6 +20,10 @@ const orderSchema = new Schema(
         image: { type: Schema.Types.String, required: true },
         price: { type: Schema.Types.Number, required: true },
         quantity: { type: Schema.Types.Number, required: true },
+        addons: { type: Schema.Types.String },
+        toppings: { type: Schema.Types.String },
+        size: { type: Schema.Types.String },
+        bun: { type: Schema.Types.String },
       },
     ],
     shippingAddress: {
@@ -50,6 +54,8 @@ const orderSchema = new Schema(
     },
     paymentMethod: {
       type: Schema.Types.String,
+      enum: ["COD", "Online Payments"],
+      default: "Order placed",
       required: true,
     },
     // paymentResult: {
@@ -63,11 +69,11 @@ const orderSchema = new Schema(
       required: true,
       default: false,
     },
-    taxAmount: {
+    deliveryCharge: {
       type: Schema.Types.Number,
       required: true,
     },
-    deliveryCharge: {
+    taxAmount: {
       type: Schema.Types.Number,
       required: true,
     },
@@ -77,12 +83,23 @@ const orderSchema = new Schema(
     },
     orderStatus: {
       type: Schema.Types.String,
-      enum: ["Order placed", "Packed", "Delivered", "Canceled"],
+      enum: [
+        "Order placed",
+        "Confirmed",
+        "Packed",
+        "Out For Delivery",
+        "Delivered",
+        "Canceled",
+      ],
       default: "Order placed",
       required: true,
     },
     deliveredAt: {
       type: Schema.Types.Date,
+    },
+    deliveryBy: {
+      type: Schema.Types.ObjectId,
+      ref: "deliveryman",
     },
   },
   {

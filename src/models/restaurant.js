@@ -20,22 +20,10 @@ const restaurantSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  restaurantAddress: {
-    landmark: {
-      type: Schema.Types.String,
-    },
-    address: {
-      type: Schema.Types.String,
-    },
-    city: {
-      type: Schema.Types.String,
-      required: true,
-    },
+  city: {
+    type: Schema.Types.String,
+    required: true,
   },
-  // city: {
-  //   type: Schema.Types.String,
-  //   required: true,
-  // },
   geoPoint: {
     lat: {
       type: Schema.Types.Number,
@@ -46,6 +34,7 @@ const restaurantSchema = new Schema({
       required: true,
     },
   },
+  topPicks: [{ type: Schema.Types.String }],
   isActive: {
     type: Schema.Types.Boolean,
     default: true,
@@ -64,7 +53,19 @@ const restaurantSchema = new Schema({
       required: true,
     },
   },
-  rating: { type: Schema.Types.Number },
+  rating: [
+    {
+      star: {
+        type: Schema.Types.Number,
+        required: true,
+      },
+      by: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "users",
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("restaurants", restaurantSchema);

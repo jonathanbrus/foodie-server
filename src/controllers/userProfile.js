@@ -1,4 +1,5 @@
 const users = require("../models/user");
+
 // helper
 const error = require("../helpers/error");
 
@@ -33,7 +34,9 @@ const updateProfile = async (req, res, nex) => {
 };
 
 const addAddress = async (req, res, nex) => {
-  const { fullName, phoneNo, pincode, city, state, doorNo, street } = req.body;
+  const { fullName, phone, pincode, city, state, address } = req.body;
+
+  console.log(req.body);
 
   try {
     const user = await users.findById(req.userId);
@@ -44,28 +47,18 @@ const addAddress = async (req, res, nex) => {
 
     user.userAddress.push({
       fullName: fullName,
-      phoneNo: phoneNo,
+      phone: phone,
       pincode: pincode,
       city: city,
       state: state,
-      doorNo: doorNo,
-      street: street,
+      address: address,
     });
 
     const addedAddress = await user.save();
 
     res.json({
       message: "Added user address",
-      addedAddress: {
-        id: addedAddress.userAddress[addedAddress.userAddress.length - 1]._id,
-        fullName: fullName,
-        phoneNo: phoneNo,
-        pincode: pincode,
-        city: city,
-        state: state,
-        doorNo: doorNo,
-        street: street,
-      },
+      addresses: addedAddress.userAddress,
     });
   } catch (e) {
     console.log(e);
@@ -75,6 +68,8 @@ const addAddress = async (req, res, nex) => {
 const deleteAddress = async (req, res, nex) => {
   const { index } = req.body;
 
+  console.log(index);
+
   try {
     const user = await users.findById(req.userId);
 
@@ -82,21 +77,19 @@ const deleteAddress = async (req, res, nex) => {
       user.userAddress.splice(Number(index), 1);
 
       const updated = await user.save();
-    }
 
-    res.json({
-      message: "deleted user address",
-    });
+      res.json({
+        message: "deleted user address",
+        addresses: updated.userAddress,
+      });
+    }
   } catch (e) {
     console.log(e);
   }
 };
 
-const changePassword = (req, res, nex) => {};
-
 module.exports = {
   updateProfile: updateProfile,
   addAddress: addAddress,
   deleteAddress: deleteAddress,
-  changePassword: changePassword,
 };

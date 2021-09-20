@@ -47,10 +47,23 @@ const otherProductsSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
-  rating: {
-    type: Schema.Types.Number,
-    required: true,
+  bestSeller: {
+    type: Schema.Types.Boolean,
+    default: false,
   },
+  rating: [
+    {
+      star: {
+        type: Schema.Types.Number,
+        required: true,
+      },
+      by: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "users",
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("products", otherProductsSchema);

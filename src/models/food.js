@@ -19,6 +19,22 @@ const foodSchema = new Schema({
     type: Schema.Types.String,
     required: true,
   },
+  veg: {
+    type: Schema.Types.Boolean,
+    default: false,
+  },
+  addons: {
+    type: Schema.Types.Array,
+  },
+  toppings: {
+    type: Schema.Types.Array,
+  },
+  sizes: {
+    type: Schema.Types.Array,
+  },
+  buns: {
+    type: Schema.Types.Array,
+  },
   fixedPrice: {
     type: Schema.Types.Number,
     required: true,
@@ -32,15 +48,28 @@ const foodSchema = new Schema({
     default: 0,
     required: true,
   },
-  availabilityTiming: {
+  availability: {
     from: { type: Schema.Types.Number },
     to: { type: Schema.Types.Number },
   },
   isActive: { type: Schema.Types.Boolean },
-  rating: {
-    type: Schema.Types.Number,
-    required: true,
+  bestSeller: {
+    type: Schema.Types.Boolean,
+    default: false,
   },
+  rating: [
+    {
+      star: {
+        type: Schema.Types.Number,
+        required: true,
+      },
+      by: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "users",
+      },
+    },
+  ],
   restaurantId: {
     type: Schema.Types.ObjectId,
     ref: "restaurants",

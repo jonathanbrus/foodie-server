@@ -30,7 +30,6 @@ const myOrders = async (req, res, nex) => {
 
 const placeOrder = async (req, res, nex) => {
   const {
-    userId,
     isFood,
     buyFrom,
     orderItems,
@@ -58,7 +57,7 @@ const placeOrder = async (req, res, nex) => {
     }
 
     const newOrder = await orders.create({
-      userId: userId,
+      userId: req.userId,
       isFood: isFood,
       buyFrom: buyFrom,
       orderItems: [...parsedOrderItems],
@@ -78,7 +77,9 @@ const placeOrder = async (req, res, nex) => {
       deliveredAt: "",
     });
 
-    await carts.deleteOne({ userId: userId });
+    if (!isFood) {
+      await carts.deleteOne({ userId: req.userId });
+    }
 
     res.json({
       message: "Order placed",

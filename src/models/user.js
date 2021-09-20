@@ -12,15 +12,23 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  emailVerified: {
+    type: Schema.Types.Boolean,
+    default: false,
+  },
   phone: {
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
     required: true,
+  },
+  phoneVerified: {
+    type: Schema.Types.Boolean,
+    default: false,
   },
   password: {
     type: Schema.Types.String,
     required: true,
   },
-  isPrime: {
+  primeMember: {
     type: Schema.Types.Boolean,
     default: false,
     required: true,
@@ -31,11 +39,15 @@ const userSchema = new Schema({
         type: Schema.Types.String,
         required: true,
       },
-      phoneNo: {
+      phone: {
         type: Schema.Types.String,
         required: true,
       },
       pincode: {
+        type: Schema.Types.String,
+        required: true,
+      },
+      address: {
         type: Schema.Types.String,
         required: true,
       },
@@ -44,14 +56,6 @@ const userSchema = new Schema({
         required: true,
       },
       state: {
-        type: Schema.Types.String,
-        required: true,
-      },
-      doorNo: {
-        type: Schema.Types.String,
-        required: true,
-      },
-      street: {
         type: Schema.Types.String,
         required: true,
       },

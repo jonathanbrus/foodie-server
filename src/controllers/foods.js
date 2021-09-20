@@ -27,7 +27,7 @@ const addNewFoodItem = async (req, res, nex) => {
       fixedPrice: foodInfo.fixedPrice.trim(),
       offerPrice: foodInfo.offerPrice.trim(),
       packagingCharge: foodInfo.packagingCharge.trim(),
-      availabilityTiming: {
+      availability: {
         from: foodInfo.availabilityTiming.from.trim(),
         to: foodInfo.availabilityTiming.to.trim(),
       },
@@ -59,10 +59,10 @@ const updateFoodItem = async (req, res, nex) => {
     fetchedFood.offerPrice = foodInfo.offerPrice || fetchedFood.offerPrice;
     fetchedFood.packagingCharge =
       foodInfo.packagingCharge || fetchedFood.packagingCharge;
-    fetchedFood.availabilityTiming.from =
-      foodInfo.availabilityTiming.from || fetchedFood.availabilityTiming.from;
-    fetchedFood.availabilityTiming.to =
-      foodInfo.availabilityTiming.to || fetchedFood.availabilityTiming.to;
+    fetchedFood.availability.from =
+      foodInfo.availability.from || fetchedFood.availability.from;
+    fetchedFood.availability.to =
+      foodInfo.availability.to || fetchedFood.availability.to;
 
     const updatedFood = await fetchedFood.save();
 
