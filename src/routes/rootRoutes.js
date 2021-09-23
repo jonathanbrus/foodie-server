@@ -3,8 +3,8 @@ const express = require("express");
 const {
   signIn,
   signUp,
-  checkIfUserExist,
-  verifyOtp,
+  generateOTP,
+  verifyOTP,
   changePassword,
 } = require("../controllers/auth");
 
@@ -26,9 +26,9 @@ router.post("/sign-in", signIn);
 
 router.post("/sign-up", signUp);
 
-router.post("/check-user-exist", checkIfUserExist);
+router.post("/generate-otp", generateOTP);
 
-router.post("/verify-otp", verifyOtp);
+router.post("/verify-otp", verifyOTP);
 
 router.post("/change-password", changePassword);
 

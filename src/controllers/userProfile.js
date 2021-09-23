@@ -36,8 +36,6 @@ const updateProfile = async (req, res, nex) => {
 const addAddress = async (req, res, nex) => {
   const { fullName, phone, pincode, city, state, address } = req.body;
 
-  console.log(req.body);
-
   try {
     const user = await users.findById(req.userId);
 
@@ -45,7 +43,7 @@ const addAddress = async (req, res, nex) => {
       throw error(404, "User not found.");
     }
 
-    user.userAddress.push({
+    user.addresses.push({
       fullName: fullName,
       phone: phone,
       pincode: pincode,
@@ -54,11 +52,11 @@ const addAddress = async (req, res, nex) => {
       address: address,
     });
 
-    const addedAddress = await user.save();
+    const updatedAddresses = await user.save();
 
     res.json({
-      message: "Added user address",
-      addresses: addedAddress.userAddress,
+      message: "Address added successfully",
+      addresses: updatedAddresses.addresses,
     });
   } catch (e) {
     console.log(e);
@@ -68,19 +66,17 @@ const addAddress = async (req, res, nex) => {
 const deleteAddress = async (req, res, nex) => {
   const { index } = req.body;
 
-  console.log(index);
-
   try {
     const user = await users.findById(req.userId);
 
     if (index > -1) {
-      user.userAddress.splice(Number(index), 1);
+      user.addresses.splice(Number(index), 1);
 
-      const updated = await user.save();
+      const updatedAddresses = await user.save();
 
       res.json({
-        message: "deleted user address",
-        addresses: updated.userAddress,
+        message: "Address deleted successfully",
+        addresses: updatedAddresses.addresses,
       });
     }
   } catch (e) {

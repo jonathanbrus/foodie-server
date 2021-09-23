@@ -35,6 +35,10 @@ const restaurantSchema = new Schema({
     },
   },
   topPicks: [{ type: Schema.Types.String }],
+  popular: {
+    type: Schema.Types.Boolean,
+    default: false,
+  },
   isActive: {
     type: Schema.Types.Boolean,
     default: true,

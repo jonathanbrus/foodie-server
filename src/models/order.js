@@ -9,7 +9,7 @@ const orderSchema = new Schema(
       required: true,
       ref: "users",
     },
-    isFood: {
+    food: {
       type: Schema.Types.Boolean,
       required: true,
     },
@@ -20,8 +20,8 @@ const orderSchema = new Schema(
         image: { type: Schema.Types.String, required: true },
         price: { type: Schema.Types.Number, required: true },
         quantity: { type: Schema.Types.Number, required: true },
-        addons: { type: Schema.Types.String },
-        toppings: { type: Schema.Types.String },
+        addon: { type: Schema.Types.String },
+        topping: { type: Schema.Types.String },
         size: { type: Schema.Types.String },
         bun: { type: Schema.Types.String },
       },
@@ -64,16 +64,20 @@ const orderSchema = new Schema(
     //   update_time: { type: String },
     //   email_address: { type: String },
     // },
-    isPaid: {
+    paid: {
       type: Schema.Types.Boolean,
       required: true,
       default: false,
+    },
+    taxAmount: {
+      type: Schema.Types.Number,
+      required: true,
     },
     deliveryCharge: {
       type: Schema.Types.Number,
       required: true,
     },
-    taxAmount: {
+    packingCharge: {
       type: Schema.Types.Number,
       required: true,
     },

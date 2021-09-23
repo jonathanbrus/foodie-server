@@ -23,18 +23,30 @@ const foodSchema = new Schema({
     type: Schema.Types.Boolean,
     default: false,
   },
-  addons: {
-    type: Schema.Types.Array,
-  },
-  toppings: {
-    type: Schema.Types.Array,
-  },
-  sizes: {
-    type: Schema.Types.Array,
-  },
-  buns: {
-    type: Schema.Types.Array,
-  },
+  addons: [
+    {
+      name: { type: Schema.Types.String },
+      price: { type: Schema.Types.Number },
+    },
+  ],
+  toppings: [
+    {
+      name: { type: Schema.Types.String },
+      price: { type: Schema.Types.Number },
+    },
+  ],
+  sizes: [
+    {
+      name: { type: Schema.Types.String },
+      price: { type: Schema.Types.Number },
+    },
+  ],
+  buns: [
+    {
+      name: { type: Schema.Types.String },
+      price: { type: Schema.Types.Number },
+    },
+  ],
   fixedPrice: {
     type: Schema.Types.Number,
     required: true,
@@ -61,11 +73,9 @@ const foodSchema = new Schema({
     {
       star: {
         type: Schema.Types.Number,
-        required: true,
       },
       by: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: "users",
       },
     },

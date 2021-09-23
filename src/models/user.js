@@ -33,7 +33,7 @@ const userSchema = new Schema({
     default: false,
     required: true,
   },
-  userAddress: [
+  addresses: [
     {
       fullName: {
         type: Schema.Types.String,

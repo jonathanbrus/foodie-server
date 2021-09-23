@@ -1,8 +1,9 @@
 const bcrypt = require("bcrypt");
-const client = require("twilio")(
-  "ACd6ce0c29f9be6349ce11bd48adaf8c9f",
-  "8cc5796af8bee3896046401fa636afc4"
-);
+// const client = require("twilio")(
+//   "ACd6ce0c29f9be6349ce11bd48adaf8c9f",
+//   "8cc5796af8bee3896046401fa636afc4"
+// );
+
 // model
 const users = require("../models/user");
 
@@ -14,37 +15,39 @@ const signIn = async (req, res, nex) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = await users.findOne({ email: email });
+    const user = await users.findOne({ email: email });
 
-    if (!existingUser) {
+    if (!user) {
       throw error(
         404,
         "No user found with the email, try creating an account."
       );
     }
 
-    const isMatched = bcrypt.compareSync(password, existingUser.password);
+    const passwordMatched = bcrypt.compareSync(password, user.password);
 
-    if (!isMatched) {
+    if (!passwordMatched) {
       throw error(401, "Password does not match, try again.");
     }
 
-    const authToken = generateToken(existingUser._id, existingUser.email);
+    const authToken = generateToken(user._id, user.email);
 
     res.json({
       statusCode: 200,
       message: "User authenticated",
       user: {
-        name: existingUser.name,
-        email: existingUser.email,
-        phone: existingUser.phone,
-        primeMember: true,
-        userAddress: existingUser.userAddress.map((address) => {
+        name: user.name,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        phone: user.phone,
+        phoneVerified: user.phoneVerified,
+        primeMember: user.primeMember,
+        addresses: user.addresses.map((address) => {
           return {
             fullName: address.fullName,
-            phone: "6380582919",
+            phone: address.phone || address.phoneNo,
             pincode: address.pincode,
-            address: "Retchagar street",
+            address: address.address || address.street,
             city: address.city,
             state: address.state,
           };
@@ -61,36 +64,39 @@ const signUp = async (req, res, nex) => {
   const { name, email, phone, password } = req.body;
 
   try {
-    const existingUser = await users.findOne({ email: email });
+    const user = await users.findOne({ email: email });
 
-    if (existingUser) {
+    if (user) {
       throw error(406, "User already exists with the same email.");
     }
 
-    const hashed = bcrypt.hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
     const newUser = await users.create({
       name: name,
       email: email,
       phone: phone,
-      password: hashed,
+      password: hashedPassword,
     });
 
     const authToken = generateToken(newUser._id, newUser.email);
 
-    res.status(201).json({
+    res.json({
+      statusCode: 201,
       message: "User created.",
       user: {
         name: newUser.name,
         email: newUser.email,
+        emailVerified: newUser.emailVerified,
         phone: newUser.phone,
-        primeMember: true,
-        userAddress: newUser.userAddress.map((address) => {
+        phoneVerified: newUser.phoneVerified,
+        primeMember: newUser.primeMember,
+        addresses: newUser.addresses.map((address) => {
           return {
             fullName: address.fullName,
             phone: address.phone,
             pincode: address.pincode,
-            address: address.street,
+            address: address.address,
             city: address.city,
             state: address.state,
           };
@@ -103,25 +109,26 @@ const signUp = async (req, res, nex) => {
   }
 };
 
-const checkIfUserExist = async (req, res, nex) => {
+const generateOTP = async (req, res, nex) => {
   try {
-    const userExist = users.findOne({ phone: req.body.phone });
+    const user = users.findOne({ phone: req.body.phone });
 
-    if (!userExist) {
+    if (!user) {
       throw error(404, "User does not exist.");
     }
+
     res.json({
       statusCode: 200,
-      userExist: true,
-      userId: userExist._id,
-      phone: userExist.phone,
+      user: true,
+      userId: user._id,
+      phone: user.phone,
     });
   } catch (e) {
     res.json(e);
   }
 };
 
-const verifyOtp = async () => {
+const verifyOTP = async () => {
   try {
     // client.verify
   } catch (e) {
@@ -132,7 +139,7 @@ const verifyOtp = async () => {
 const changePassword = async (req, res, nex) => {
   const { userId, password } = req.body;
   try {
-    const findUser = await users.findById(userId);
+    const user = await users.findById(userId);
 
     if (!finduser) {
       throw error(404, "User does not exist");
@@ -140,9 +147,9 @@ const changePassword = async (req, res, nex) => {
 
     const hashed = bcrypt.hashSync(password, 10);
 
-    findUser.password = hashed;
+    user.password = hashed;
 
-    findUser.save();
+    user.save();
 
     res.json({
       statusCode: 200,
@@ -156,7 +163,8 @@ const changePassword = async (req, res, nex) => {
 module.exports = {
   signIn: signIn,
   signUp: signUp,
-  checkIfUserExist: checkIfUserExist,
-  verifyOtp: verifyOtp,
+  //
+  generateOTP: generateOTP,
+  verifyOTP: verifyOTP,
   changePassword: changePassword,
 };

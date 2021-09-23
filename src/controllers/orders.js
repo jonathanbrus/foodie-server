@@ -30,13 +30,14 @@ const myOrders = async (req, res, nex) => {
 
 const placeOrder = async (req, res, nex) => {
   const {
-    isFood,
+    food,
     buyFrom,
     orderItems,
     shippingAddress,
     paymentMethod,
     taxAmount,
     deliveryCharge,
+    packingCharge,
     totalAmount,
   } = req.body;
 
@@ -58,7 +59,7 @@ const placeOrder = async (req, res, nex) => {
 
     const newOrder = await orders.create({
       userId: req.userId,
-      isFood: isFood,
+      food: food,
       buyFrom: buyFrom,
       orderItems: [...parsedOrderItems],
       shippingAddress: {
@@ -73,11 +74,12 @@ const placeOrder = async (req, res, nex) => {
       isPaid: false,
       taxAmount: taxAmount,
       deliveryCharge: deliveryCharge,
+      packingCharge: packingCharge,
       totalAmount: totalAmount,
       deliveredAt: "",
     });
 
-    if (!isFood) {
+    if (!food) {
       await carts.deleteOne({ userId: req.userId });
     }
 
