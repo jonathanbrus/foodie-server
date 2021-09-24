@@ -79,7 +79,7 @@ const placeOrder = async (req, res, nex) => {
       deliveredAt: "",
     });
 
-    if (!food) {
+    if (food !== "true") {
       await carts.deleteOne({ userId: req.userId });
     }
 

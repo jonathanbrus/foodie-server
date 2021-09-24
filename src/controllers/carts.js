@@ -108,6 +108,8 @@ const modifyQuantity = async (req, res, nex) => {
 
     const updatedCart = await userCart.save();
 
+    console.log(updatedCart);
+
     res.json({
       message: "Updated quantity",
       updatedCart: updatedCart,

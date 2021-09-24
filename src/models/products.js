@@ -31,10 +31,6 @@ const otherProductsSchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
-  deliveryCharge: {
-    type: Schema.Types.Number,
-    required: true,
-  },
   itemsInStock: {
     type: Schema.Types.Number,
     required: true,
