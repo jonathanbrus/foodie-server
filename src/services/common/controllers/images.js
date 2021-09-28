@@ -2,7 +2,7 @@ const image = require("../../../models/sliders");
 const error = require("../../../utils/error");
 
 const getImages = async (req, res, nex) => {
-  const { imageFor } = req.params;
+  const { imageFor } = req.query;
 
   try {
     const images = await image.findOne({ for: imageFor });

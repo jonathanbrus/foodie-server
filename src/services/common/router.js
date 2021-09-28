@@ -16,6 +16,6 @@ router.get("/allFoodsByRes", allFoodsByRes);
 
 router.get("/allProductsByCategory", allProductsByCategory);
 
-router.get("/fetchImages/:imageFor", getImages);
+router.get("/fetchImages", getImages);
 
 module.exports = router;
