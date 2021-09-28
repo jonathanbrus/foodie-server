@@ -13,9 +13,9 @@ App.use(helmet());
 App.use(express.json());
 App.use(express.urlencoded({ extended: true }));
 
-const rootRoutes = require("./routes/rootRoutes");
+const Router = require("./router");
 
-App.use(rootRoutes);
+App.use(Router);
 
 const PORT = process.env.PORT || 5000;
 

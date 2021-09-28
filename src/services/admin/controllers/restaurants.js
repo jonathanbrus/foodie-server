@@ -1,17 +1,4 @@
-const restaurants = require("../models/restaurant");
-
-const getAllRestaurants = async (req, res, nex) => {
-  try {
-    const allRestaurants = await restaurants.find();
-
-    res.json({
-      message: "Fetched all restaurants",
-      allRestaurants: allRestaurants.sort(() => Math.random() - 0.5),
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
+const restaurants = require("../../../models/restaurant");
 
 const addRestaurant = async (req, res, nex) => {
   const { restaurantInfo } = req.body;
@@ -107,7 +94,6 @@ const toggleActiveRestaurant = async (req, res, nex) => {
 };
 
 module.exports = {
-  getAllRestaurants: getAllRestaurants,
   addRestaurant: addRestaurant,
   updateRestaurant: updateRestaurant,
   toggleActiveRestaurant: toggleActiveRestaurant,

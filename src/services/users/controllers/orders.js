@@ -1,19 +1,7 @@
-const orders = require("../models/order");
-const carts = require("../models/cart");
+const orders = require("../../../models/order");
+const carts = require("../../../models/cart");
 
-const allOrders = async (req, res, nex) => {
-  try {
-    const allOrder = await orders.find();
-
-    res.json({
-      message: "Fetched all orders",
-      allOrders: allOrder.reverse().splice(0, 49),
-      totalOrders: allOrder.length,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
+const error = require("../../../utils/error");
 
 const myOrders = async (req, res, nex) => {
   try {
@@ -24,7 +12,7 @@ const myOrders = async (req, res, nex) => {
       myOrders: myAllOrders.reverse(),
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -88,35 +76,7 @@ const placeOrder = async (req, res, nex) => {
       newOrder: newOrder,
     });
   } catch (e) {
-    console.log(e);
-  }
-};
-
-const updateOrder = async (req, res, nex) => {
-  const { orderId, isPaid, orderStatus, ifNeeded } = req.body;
-
-  try {
-    const order = await orders.findById(orderId);
-
-    if (!order) {
-      throw error(404, "Order not found.");
-    }
-
-    order.isPaid = isPaid || order.isPaid;
-    order.orderStatus = orderStatus || order.orderStatus;
-
-    order.taxAmount = ifNeeded.taxPrice || order.taxAmount;
-    order.deliveryCharge = ifNeeded.deliveryPrice || order.deliveryCharge;
-    order.totalAmount = ifNeeded.totalPrice || order.totalAmount;
-
-    const updatedOrder = await order.save();
-
-    res.json({
-      message: "Updated order successfully.",
-      updatedOrder: updatedOrder,
-    });
-  } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -132,21 +92,18 @@ const cancelOrder = async (req, res, nex) => {
 
     order.orderStatus = "Canceled" || order.orderStatus;
 
-    const CanceledOrder = await order.save();
+    await order.save();
 
     res.json({
-      message: "Canceled order successfully.",
-      CanceledOrder: CanceledOrder,
+      message: "Successfully canceled order",
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(e));
   }
 };
 
 module.exports = {
-  allOrders: allOrders,
   myOrders: myOrders,
   placeOrder: placeOrder,
   cancelOrder: cancelOrder,
-  updateOrder: updateOrder,
 };

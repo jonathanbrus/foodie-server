@@ -1,7 +1,6 @@
-const users = require("../models/user");
+const users = require("../../../models/user");
 
-// helper
-const error = require("../helpers/error");
+const error = require("../../../utils/error");
 
 const updateProfile = async (req, res, nex) => {
   const { userId, name, email, phone } = req.body;
@@ -29,7 +28,7 @@ const updateProfile = async (req, res, nex) => {
       },
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -59,7 +58,7 @@ const addAddress = async (req, res, nex) => {
       addresses: updatedAddresses.addresses,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -80,7 +79,30 @@ const deleteAddress = async (req, res, nex) => {
       });
     }
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
+  }
+};
+
+const changePassword = async (req, res, nex) => {
+  const { userId, password } = req.body;
+  try {
+    const user = await users.findById(userId);
+
+    if (!finduser) {
+      throw error(404, "User does not exist");
+    }
+
+    const hashed = bcrypt.hashSync(password, 10);
+
+    user.password = hashed;
+    user.save();
+
+    res.json({
+      statusCode: 200,
+      message: "Succesfully changed password",
+    });
+  } catch (e) {
+    res.json(e);
   }
 };
 
@@ -88,4 +110,5 @@ module.exports = {
   updateProfile: updateProfile,
   addAddress: addAddress,
   deleteAddress: deleteAddress,
+  changePassword: changePassword,
 };

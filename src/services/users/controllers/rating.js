@@ -1,5 +1,5 @@
-const products = require("../models/products");
-const foods = require("../models/food");
+const products = require("../../../models/products");
+const foods = require("../../../models/food");
 
 const reviewProduct = (req, res, nex) => {};
 

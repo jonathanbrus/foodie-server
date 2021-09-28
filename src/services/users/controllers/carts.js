@@ -1,5 +1,7 @@
-const carts = require("../models/cart");
-const otherProducts = require("../models/products");
+const carts = require("../../../models/cart");
+const otherProducts = require("../../../models/products");
+
+const error = require("../../../utils/error");
 
 const myCart = async (req, res, nex) => {
   try {
@@ -35,7 +37,7 @@ const myCart = async (req, res, nex) => {
       myCartItems: cart,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -68,7 +70,7 @@ const addToCart = async (req, res, nex) => {
       });
     }
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -89,7 +91,7 @@ const removeFromCart = async (req, res, nex) => {
       updatedCart: updatedCart,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -115,7 +117,7 @@ const modifyQuantity = async (req, res, nex) => {
       updatedCart: updatedCart,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 

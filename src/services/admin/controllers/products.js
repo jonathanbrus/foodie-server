@@ -1,14 +1,4 @@
-const products = require("../models/products");
-
-const getAllProductsByCategory = async (req, res, nex) => {
-  const { category } = req.query;
-  const allProducts = await products.find({ category: category });
-
-  res.json({
-    message: `fetched ${category}`,
-    products: allProducts,
-  });
-};
+const products = require("../../../models/products");
 
 const addNewProduct = async (req, res, nex) => {
   const { category, prodInfo } = req.body;
@@ -89,7 +79,6 @@ const deleteProduct = async (req, res, nex) => {
 };
 
 module.exports = {
-  getAllProductsByCategory: getAllProductsByCategory,
   addNewProduct: addNewProduct,
   updateProduct: updateProduct,
   deleteProduct: deleteProduct,

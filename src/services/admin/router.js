@@ -5,21 +5,21 @@ const {
   updateRestaurant,
   deleteRestaurant,
   toggleActiveRestaurant,
-} = require("../controllers/restaurants");
+} = require("./controllers/restaurants");
 
 const {
   addNewFoodItem,
   updateFoodItem,
   deleteFoodItem,
-} = require("../controllers/foods");
+} = require("./controllers/foods");
 
 const {
   addNewProduct,
   updateProduct,
   deleteProduct,
-} = require("../controllers/products");
+} = require("./controllers/products");
 
-const { allOrders, updateOrder } = require("../controllers/orders");
+const { allOrders, updateOrder } = require("./controllers/orders");
 
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.post("/updateProduct", updateProduct);
 
 router.delete("/deleteProduct", deleteProduct);
 
-router.get("/allOrders", allOrders);
+router.get("/allOrders/:count", allOrders);
 
 router.post("/updateOrder", updateOrder);
 

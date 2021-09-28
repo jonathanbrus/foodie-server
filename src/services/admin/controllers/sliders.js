@@ -1,18 +1,4 @@
-const sliders = require("../models/sliders");
-
-const getSlider = async (req, res, nex) => {
-  const { imageFor } = req.params;
-
-  try {
-    const slider = await sliders.findOne({ for: imageFor });
-
-    res.json({
-      sliders: slider.images,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
+const sliders = require("../../../models/sliders");
 
 const addImage = async (req, res, nex) => {
   const { imageFor, images } = req.body;
@@ -47,7 +33,6 @@ const deleteImage = async (req, res, nex) => {
 };
 
 module.exports = {
-  getSlider: getSlider,
   addImage: addImage,
   deleteImage: deleteImage,
 };

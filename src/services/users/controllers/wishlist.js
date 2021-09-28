@@ -1,5 +1,7 @@
-const wishlist = require("../models/wishlist");
-const carts = require("../models/cart");
+const wishlist = require("../../../models/wishlist");
+const carts = require("../../../models/cart");
+
+const error = require("../../../utils/error");
 
 const addToList = async (req, res, nex) => {
   const { productId, wishlistId } = req.body;
@@ -24,7 +26,7 @@ const addToList = async (req, res, nex) => {
       wishlist: list,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -36,7 +38,7 @@ const removeFromList = async (req, res, nex) => {
 
     list.items = list.items.filter((item) => `${item}` !== `${productId}`);
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -69,7 +71,7 @@ const addToList = async (req, res, nex) => {
       wishlist: list,
     });
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
@@ -105,7 +107,7 @@ const moveToCart = async (req, res, nex) => {
       });
     }
   } catch (e) {
-    console.log(e);
+    res.json(error(500, "Something went wrong"));
   }
 };
 
