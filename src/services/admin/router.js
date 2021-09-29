@@ -47,7 +47,7 @@ router.post("/updateProduct", updateProduct);
 
 router.delete("/deleteProduct", deleteProduct);
 
-router.get("/allOrders/:count", allOrders);
+router.get("/allOrders", allOrders);
 
 router.post("/updateOrder", updateOrder);
 
