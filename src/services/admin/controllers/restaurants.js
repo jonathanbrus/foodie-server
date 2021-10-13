@@ -1,92 +1,96 @@
 const restaurants = require("../../../models/restaurant");
 
-const addRestaurant = async (req, res, nex) => {
-  const { restaurantInfo } = req.body;
+const create = async (req, res, nex) => {
+  const { config } = req.body;
 
   try {
-    const newRestaurant = await restaurants.create({
-      name: restaurantInfo.name.trim(),
-      email: restaurantInfo.email.trim(),
-      password: restaurantInfo.password.trim(),
-      image: restaurantInfo.image.trim(),
-      restaurantAddress: {
-        landmark: "alo",
-        address: "alo",
-        city: restaurantInfo.city.trim(),
-      },
+    const created = await restaurants.create({
+      name: config.name.trim(),
+      email: config.email.trim(),
+      password: config.password.trim(),
+      image: config.image.trim(),
+      city: config.city.trim(),
       geoPoint: {
-        lat: Number(restaurantInfo.lat.trim()),
-        long: Number(restaurantInfo.long.trim()),
+        lat: Number(config.lat.trim()),
+        long: Number(config.long.trim()),
       },
+      topPicks: config.topPicks,
+      popular: config.popular,
       isActive: true,
-      offer: Number(restaurantInfo.offer.trim()),
+      offer: Number(config.offer.trim()),
       timing: {
-        from: Number(restaurantInfo.timing.from.trim()),
-        to: Number(restaurantInfo.timing.to.trim()),
+        from: Number(config.timing.from.trim()),
+        to: Number(config.timing.to.trim()),
       },
-      rating: 4.1,
+      rating: [],
     });
 
     res.json({
       message: "Added new restaurant successfully!",
-      newRestaurant: newRestaurant,
+      created: created,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const updateRestaurant = async (req, res, nex) => {
-  const { restaurantInfo } = req.body;
+const updateOne = async (req, res, nex) => {
+  const { config } = req.body;
 
   try {
-    const fetchedRestaurant = await restaurants.findById(restaurantInfo.id);
+    const fetched = await restaurants.findById(config.id);
 
-    (fetchedRestaurant.name =
-      restaurantInfo.name.trim() || fetchedRestaurant.name),
-      (fetchedRestaurant.email =
-        restaurantInfo.email.trim() || fetchedRestaurant.email),
-      (fetchedRestaurant.password =
-        restaurantInfo.password.trim() || fetchedRestaurant.password),
-      (fetchedRestaurant.image =
-        restaurantInfo.image.trim() || fetchedRestaurant.image),
-      (fetchedRestaurant.restaurantAddress.city =
-        restaurantInfo.city.trim() || fetchedRestaurant.restaurantAddress.city);
-    fetchedRestaurant.geoPoint.lat =
-      Number(restaurantInfo.lat) || fetchedRestaurant.geoPoint.lat;
-    fetchedRestaurant.geoPoint.long =
-      Number(restaurantInfo.long) || fetchedRestaurant.geoPoint.long;
-    fetchedRestaurant.offer = restaurantInfo.offer || fetchedRestaurant.offer;
-    fetchedRestaurant.timing.from =
-      Number(restaurantInfo.timing.from) || fetchedRestaurant.timing.from;
-    fetchedRestaurant.timing.to =
-      Number(restaurantInfo.timing.to) || fetchedRestaurant.timing.to;
+    fetched.name = config.name.trim() || fetched.name;
+    fetched.email = config.email.trim() || fetched.email;
+    fetched.password = config.password.trim() || fetched.password;
+    fetched.image = config.image.trim() || fetched.image;
+    fetched.city =
+      config.city.trim() || fetched.city || fetched.restaurantAddress.city;
+    fetched.geoPoint.lat = Number(config.lat) || fetched.geoPoint.lat;
+    fetched.geoPoint.long = Number(config.long) || fetched.geoPoint.long;
+    fetched.topPicks = config.topPicks || fetched.topPicks;
+    fetched.popular = config.popular || fetched.popular;
+    fetched.offer = config.offer || fetched.offer;
+    fetched.timing.from = Number(config.timing.from) || fetched.timing.from;
+    fetched.timing.to = Number(config.timing.to) || fetched.timing.to;
 
-    const updatedRestaurant = await fetchedRestaurant.save();
+    const updated = await fetched.save();
 
     res.json({
       message: "Successfully updated restaurant",
-      updatedRestaurant: updatedRestaurant,
+      updated: updated,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const deleteRestaurant = async (req, res, nex) => {};
-
-const toggleActiveRestaurant = async (req, res, nex) => {
-  const { resId } = req.body;
+const deleteOne = async (req, res, nex) => {
+  const { id } = req.query;
   try {
-    const fetchedRestaurant = await restaurants.findById(resId);
-
-    fetchedRestaurant.isActive = !fetchedRestaurant.isActive;
-
-    const udpdated = await fetchedRestaurant.save();
+    await restaurants.deleteOne({ _id: id });
 
     res.json({
-      message: `Updated to ${udpdated.isActive}`,
-      udpdated: udpdated.isActive,
+      statusCode: 200,
+      message: "Successfully deleted the restaurant",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const toggleAvailability = async (req, res, nex) => {
+  const { id } = req.body;
+  try {
+    const fetched = await restaurants.findById(id);
+
+    fetched.isActive = !fetched.isActive;
+
+    const updated = await fetched.save();
+
+    res.json({
+      message: `Updated to ${updated.isActive}`,
+      updated: updated.isActive,
     });
   } catch (e) {
     console.log(e);
@@ -94,8 +98,8 @@ const toggleActiveRestaurant = async (req, res, nex) => {
 };
 
 module.exports = {
-  addRestaurant: addRestaurant,
-  updateRestaurant: updateRestaurant,
-  toggleActiveRestaurant: toggleActiveRestaurant,
-  deleteRestaurant: deleteRestaurant,
+  create: create,
+  updateOne: updateOne,
+  deleteOne: deleteOne,
+  toggleAvailability: toggleAvailability,
 };

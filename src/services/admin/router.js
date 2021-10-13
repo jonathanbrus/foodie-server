@@ -1,54 +1,30 @@
 const express = require("express");
 
-const {
-  addRestaurant,
-  updateRestaurant,
-  deleteRestaurant,
-  toggleActiveRestaurant,
-} = require("./controllers/restaurants");
-
-const {
-  addNewFoodItem,
-  updateFoodItem,
-  deleteFoodItem,
-} = require("./controllers/foods");
-
-const {
-  addNewProduct,
-  updateProduct,
-  deleteProduct,
-} = require("./controllers/products");
-
-const { allOrders, updateOrder } = require("./controllers/orders");
+const restaurant = require("./controllers/restaurants");
+const food = require("./controllers/foods");
+const product = require("./controllers/products");
+const order = require("./controllers/orders");
 
 const router = express.Router();
 
-router.post("/add-images");
+router.post("/images");
+router.delete("/images");
 
-router.delete("/delete-images");
+router.post("/restaurant", restaurant.create);
+router.post("/restaurant/update", restaurant.updateOne);
+router.delete("/restaurant", restaurant.deleteOne);
+router.post("/restaurant/toggle", restaurant.toggleAvailability);
 
-router.post("/addRestaurant", addRestaurant);
+router.post("/food", food.create);
+router.post("/food/update", food.updateOne);
+router.delete("/food", food.deleteOne);
+router.post("/food/toggle", food.toggleAvailability);
 
-router.post("/updateRestaurant", updateRestaurant);
+router.post("/product", product.create);
+router.post("/product/update", product.updateOne);
+router.delete("/product", product.deleteOne);
 
-router.delete("/deleteRestaurant", deleteRestaurant);
-
-router.post("/toggleActiveRestaurant", toggleActiveRestaurant);
-
-router.post("/addNewFoodItem", addNewFoodItem);
-
-router.post("/updateFoodItem", updateFoodItem);
-
-router.delete("/deleteFoodItem", deleteFoodItem);
-
-router.post("/addNewProduct", addNewProduct);
-
-router.post("/updateProduct", updateProduct);
-
-router.delete("/deleteProduct", deleteProduct);
-
-router.get("/allOrders", allOrders);
-
-router.post("/updateOrder", updateOrder);
+router.get("/orders", order.get);
+router.post("/orders/update", order.update);
 
 module.exports = router;

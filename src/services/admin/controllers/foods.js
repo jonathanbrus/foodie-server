@@ -1,81 +1,112 @@
-const food = require("../../../models/food");
+const foods = require("../../../models/food");
 
-const addNewFoodItem = async (req, res, nex) => {
-  const { foodConfig } = req.body;
+const create = async (req, res, nex) => {
+  const { config } = req.body;
 
   try {
-    const addedFood = await food.create({
-      name: foodConfig.name.trim(),
-      image: foodConfig.image.trim(),
-      description: foodConfig.description.trim(),
-      category: foodConfig.category.trim(),
-      fixedPrice: foodConfig.fixedPrice.trim(),
-      offerPrice: foodConfig.offerPrice.trim(),
-      packagingCharge: foodConfig.packagingCharge.trim(),
+    const created = await foods.create({
+      name: config.name.trim(),
+      image: config.image.trim(),
+      description: config.description.trim(),
+      category: config.category.trim(),
+      veg: config.veg,
+      addons: config.addons,
+      toppings: config.toppings,
+      sizes: config.sizes,
+      buns: config.buns,
+      fixedPrice: config.fixedPrice.trim(),
+      offerPrice: config.offerPrice.trim(),
+      packagingCharge: config.packagingCharge.trim(),
       availability: {
-        from: foodConfig.availabilityTiming.from.trim(),
-        to: foodConfig.availabilityTiming.to.trim(),
+        from: config.availabilityTiming.from.trim(),
+        to: config.availabilityTiming.to.trim(),
       },
       isActive: true,
-      rating: 4.1,
-      restaurantId: foodConfig.restaurantId.trim(),
+      bestSeller: config.bestSeller,
+      rating: [],
+      restaurantId: config.restaurantId.trim(),
     });
 
     res.json({
       statusCode: 200,
       message: "Successfully deleted the food",
-      addedFood: addedFood,
+      created: created,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const updateFoodItem = async (req, res, nex) => {
-  const { foodConfig } = req.body;
+const updateOne = async (req, res, nex) => {
+  const { config } = req.body;
 
   try {
-    const fetchedFood = await food.findById(foodConfig.id);
+    const fetched = await foods.findById(config.id);
 
-    fetchedFood.name = foodConfig.name.trim() || fetchedFood.name;
-    fetchedFood.image = foodConfig.image.trim() || fetchedFood.image;
-    fetchedFood.description =
-      foodConfig.description.trim() || fetchedFood.description;
-    fetchedFood.category = foodConfig.category.trim() || fetchedFood.category;
-    fetchedFood.fixedPrice = foodConfig.fixedPrice || fetchedFood.fixedPrice;
-    fetchedFood.offerPrice = foodConfig.offerPrice || fetchedFood.offerPrice;
-    fetchedFood.packagingCharge =
-      foodConfig.packagingCharge || fetchedFood.packagingCharge;
-    fetchedFood.availability.from =
-      foodConfig.availability.from || fetchedFood.availability.from;
-    fetchedFood.availability.to =
-      foodConfig.availability.to || fetchedFood.availability.to;
+    fetched.name = config.name.trim() || fetched.name;
+    fetched.image = config.image.trim() || fetched.image;
+    fetched.description = config.description.trim() || fetched.description;
+    fetched.category = config.category.trim() || fetched.category;
+    fetched.veg = config.veg || fetched.veg;
+    fetched.addons = config.addons || fetched.addons;
+    fetched.toppings = config.toppings || fetched.toppings;
+    fetched.sizes = config.sizes || fetched.sizes;
+    fetched.buns = config.buns || fetched.buns;
+    fetched.fixedPrice = config.fixedPrice || fetched.fixedPrice;
+    fetched.offerPrice = config.offerPrice || fetched.offerPrice;
+    fetched.packagingCharge = config.packagingCharge || fetched.packagingCharge;
+    fetched.availability.from =
+      config.availability.from || fetched.availability.from;
+    fetched.availability.to = config.availability.to || fetched.availability.to;
+    fetched.bestSeller = config.bestSeller || fetched.bestSeller;
 
-    const updatedFood = await fetchedFood.save();
+    const updated = await fetched.save();
 
     res.json({
       statusCode: 200,
       message: "Successfully deleted the food",
-      updatedFood: updatedFood,
+      updated: updated,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const deleteFoodItem = async (req, res, nex) => {
-  const { foodId } = req.query;
+const deleteOne = async (req, res, nex) => {
+  const { id } = req.query;
   try {
-    await food.deleteOne({ _id: foodId });
+    await foods.deleteOne({ _id: id });
 
-    res.json({ statusCode: 200, message: "Successfully deleted the food" });
+    res.json({
+      statusCode: 200,
+      message: "Successfully deleted the food",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const toggleAvailability = async (req, res, nex) => {
+  const { id } = req.body;
+  try {
+    const fetched = await foods.findById(id);
+
+    fetched.isActive = !fetched.isActive;
+
+    const updated = await fetched.save();
+
+    res.json({
+      message: `Updated to ${updated.isActive}`,
+      updated: updated.isActive,
+    });
   } catch (e) {
     console.log(e);
   }
 };
 
 module.exports = {
-  addNewFoodItem: addNewFoodItem,
-  updateFoodItem: updateFoodItem,
-  deleteFoodItem: deleteFoodItem,
+  create: create,
+  updateOne: updateOne,
+  deleteOne: deleteOne,
+  toggleAvailability: toggleAvailability,
 };

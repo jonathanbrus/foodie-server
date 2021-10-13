@@ -23,6 +23,14 @@ const otherProductsSchema = new Schema({
       required: true,
     },
   ],
+  category: {
+    type: Schema.Types.String,
+    required: true,
+  },
+  subCategory: {
+    type: Schema.Types.String,
+    required: true,
+  },
   fixedPrice: {
     type: Schema.Types.Number,
     required: true,
@@ -33,14 +41,6 @@ const otherProductsSchema = new Schema({
   },
   itemsInStock: {
     type: Schema.Types.Number,
-    required: true,
-  },
-  category: {
-    type: Schema.Types.String,
-    required: true,
-  },
-  subCategory: {
-    type: Schema.Types.String,
     required: true,
   },
   bestSeller: {

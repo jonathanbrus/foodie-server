@@ -1,26 +1,26 @@
 const products = require("../../../models/products");
 
-const addNewProduct = async (req, res, nex) => {
-  const { category, prodInfo } = req.body;
+const create = async (req, res, nex) => {
+  const { category, config } = req.body;
 
   try {
-    const addedProduct = await products.create({
-      name: prodInfo.name.trim(),
-      image: prodInfo.image,
-      description: prodInfo.description.trim(),
-      productDetail: prodInfo.productDetail,
+    const created = await products.create({
+      name: config.name.trim(),
+      image: config.image,
+      description: config.description.trim(),
+      productDetail: config.productDetail,
       category: category.trim(),
-      subCategory: prodInfo.category.trim(),
-      fixedPrice: Number(prodInfo.fixedPrice),
-      offerPrice: Number(prodInfo.offerPrice),
-      deliveryCharge: Number(prodInfo.deliveryCharge),
-      itemsInStock: Number(prodInfo.itemsInStock),
-      rating: 4.2,
+      subCategory: config.category.trim(),
+      fixedPrice: Number(config.fixedPrice),
+      offerPrice: Number(config.offerPrice),
+      itemsInStock: Number(config.itemsInStock),
+      bestSeller: config.bestSeller,
+      rating: [],
     });
 
     res.json({
       message: `Successfully added product to ${category}`,
-      addedProduct: addedProduct,
+      created: created,
     });
   } catch (e) {
     console.log(e);
@@ -28,47 +28,40 @@ const addNewProduct = async (req, res, nex) => {
   }
 };
 
-const updateProduct = async (req, res, nex) => {
-  const { category, prodInfo } = req.body;
+const updateOne = async (req, res, nex) => {
+  const { category, config } = req.body;
 
   try {
-    const fetchedProduct = await products.findOne({
-      _id: prodInfo.id,
+    const fetched = await products.findOne({
+      _id: config.id,
       category: category,
     });
 
-    fetchedProduct.name = prodInfo.name || fetchedProduct.name.trim();
-    fetchedProduct.image = prodInfo.image || fetchedProduct.image;
-    fetchedProduct.description =
-      prodInfo.description || fetchedProduct.description.trim();
-    fetchedProduct.productDetail =
-      prodInfo.productDetail || fetchedProduct.productDetail;
-    fetchedProduct.category = category || category.trim();
-    fetchedProduct.subCategory =
-      prodInfo.category || fetchedProduct.category.trim();
-    fetchedProduct.fixedPrice =
-      prodInfo.fixedPrice || fetchedProduct.fixedPrice;
-    fetchedProduct.offerPrice =
-      prodInfo.offerPrice || fetchedProduct.offerPrice;
-    fetchedProduct.deliveryCharge =
-      prodInfo.deliveryCharge || fetchedProduct.deliveryCharge;
-    fetchedProduct.itemsInStock =
-      prodInfo.itemsInStock || fetchedProduct.itemsInStock;
+    fetched.name = config.name || fetched.name.trim();
+    fetched.image = config.image || fetched.image;
+    fetched.description = config.description || fetched.description.trim();
+    fetched.productDetail = config.productDetail || fetched.productDetail;
+    fetched.category = category || category.trim();
+    fetched.subCategory = config.category || fetched.category.trim();
+    fetched.fixedPrice = config.fixedPrice || fetched.fixedPrice;
+    fetched.offerPrice = config.offerPrice || fetched.offerPrice;
+    fetched.itemsInStock = config.itemsInStock || fetched.itemsInStock;
+    fetched.bestSeller = config.bestSeller || fetched.bestSeller;
 
-    const updatedProduct = await fetchedProduct.save();
+    const updated = await fetched.save();
     res.json({
       message: `Successfully added product to ${category}`,
-      updatedProduct: updatedProduct,
+      updated: updated,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const deleteProduct = async (req, res, nex) => {
-  const { prodId } = req.query;
+const deleteOne = async (req, res, nex) => {
+  const { id } = req.query;
   try {
-    await products.deleteOne({ _id: prodId });
+    await products.deleteOne({ _id: id });
 
     res.json({
       message: "Successfully deleted product",
@@ -79,7 +72,7 @@ const deleteProduct = async (req, res, nex) => {
 };
 
 module.exports = {
-  addNewProduct: addNewProduct,
-  updateProduct: updateProduct,
-  deleteProduct: deleteProduct,
+  create: create,
+  updateOne: updateOne,
+  deleteOne: deleteOne,
 };

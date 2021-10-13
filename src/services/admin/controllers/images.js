@@ -1,6 +1,6 @@
 const sliders = require("../../../models/sliders");
 
-const addImage = async (req, res, nex) => {
+const add = async (req, res, nex) => {
   const { imageFor, images } = req.body;
 
   try {
@@ -18,7 +18,7 @@ const addImage = async (req, res, nex) => {
   }
 };
 
-const deleteImage = async (req, res, nex) => {
+const deleteOne = async (req, res, nex) => {
   const { id } = req.params;
 
   try {
@@ -33,6 +33,6 @@ const deleteImage = async (req, res, nex) => {
 };
 
 module.exports = {
-  addImage: addImage,
-  deleteImage: deleteImage,
+  add: add,
+  deleteOne: deleteOne,
 };

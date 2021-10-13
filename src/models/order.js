@@ -88,7 +88,7 @@ const orderSchema = new Schema(
     orderStatus: {
       type: Schema.Types.String,
       enum: [
-        "Order placed",
+        "Order Placed",
         "Confirmed",
         "Packed",
         "Out For Delivery",

@@ -1,42 +1,42 @@
 const orders = require("../../../models/order");
 
-const allOrders = async (req, res, nex) => {
+const get = async (req, res, nex) => {
   const { count } = req.query;
   try {
-    const allOrder = await orders.find();
+    const allOrders = await orders.find();
 
     res.json({
       message: "Fetched all orders",
-      allOrders: allOrder.reverse().splice(0, count),
-      totalOrders: allOrder.length,
+      allOrders: allOrders.reverse().splice(0, count),
+      totalOrders: allOrders.length,
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-const updateOrder = async (req, res, nex) => {
-  const { orderId, isPaid, orderStatus, ifNeeded } = req.body;
+const update = async (req, res, nex) => {
+  const { id, paid, orderStatus, other } = req.body;
 
   try {
-    const order = await orders.findById(orderId);
+    const fetched = await orders.findById(id);
 
-    if (!order) {
+    if (!fetched) {
       throw error(404, "Order not found.");
     }
 
-    order.isPaid = isPaid || order.isPaid;
-    order.orderStatus = orderStatus || order.orderStatus;
+    fetched.paid = paid;
+    fetched.orderStatus = orderStatus || fetched.orderStatus;
 
-    order.taxAmount = ifNeeded.taxPrice || order.taxAmount;
-    order.deliveryCharge = ifNeeded.deliveryPrice || order.deliveryCharge;
-    order.totalAmount = ifNeeded.totalPrice || order.totalAmount;
+    fetched.taxAmount = other.taxPrice || fetched.taxAmount;
+    fetched.deliveryCharge = other.deliveryPrice || fetched.deliveryCharge;
+    fetched.totalAmount = other.totalPrice || fetched.totalAmount;
 
-    const updatedOrder = await order.save();
+    const updated = await fetched.save();
 
     res.json({
       message: "Updated order successfully.",
-      updatedOrder: updatedOrder,
+      updated: updated,
     });
   } catch (e) {
     console.log(e);
@@ -44,6 +44,6 @@ const updateOrder = async (req, res, nex) => {
 };
 
 module.exports = {
-  allOrders: allOrders,
-  updateOrder: updateOrder,
+  get: get,
+  update: update,
 };

@@ -87,16 +87,7 @@ const signUp = async (req, res, nex) => {
         phone: newUser.phone,
         phoneVerified: newUser.phoneVerified,
         primeMember: newUser.primeMember,
-        addresses: newUser.addresses.map((address) => {
-          return {
-            fullName: address.fullName,
-            phone: address.phone,
-            pincode: address.pincode,
-            address: address.address,
-            city: address.city,
-            state: address.state,
-          };
-        }),
+        addresses: newUser.addresses,
       },
       authToken: authToken,
     });
