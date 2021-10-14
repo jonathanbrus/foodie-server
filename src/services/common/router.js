@@ -1,21 +1,21 @@
 const express = require("express");
 
-const allRestaurants = require("./controllers/restaurants");
+const restaurants = require("./controllers/restaurants");
 
-const allFoodsByRes = require("./controllers/foods");
+const foods = require("./controllers/foods");
 
-const allProductsByCategory = require("./controllers/products");
+const products = require("./controllers/products");
 
-const getImages = require("./controllers/images");
+const images = require("./controllers/images");
 
 const router = express.Router();
 
-router.get("/allRestaurants", allRestaurants);
+router.get("/restaurants", restaurants.get);
 
-router.get("/allFoodsByRes", allFoodsByRes);
+router.get("/foods", foods.get);
 
-router.get("/allProductsByCategory", allProductsByCategory);
+router.get("/products", products.get);
 
-router.get("/fetchImages", getImages);
+router.get("/images", images.get);
 
 module.exports = router;

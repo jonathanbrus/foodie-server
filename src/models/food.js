@@ -60,11 +60,20 @@ const foodSchema = new Schema({
     default: 0,
     required: true,
   },
-  availability: {
-    from: { type: Schema.Types.Number },
-    to: { type: Schema.Types.Number },
+  timing: {
+    from: {
+      type: Schema.Types.Number,
+      default: 10,
+    },
+    to: {
+      type: Schema.Types.Number,
+      default: 22,
+    },
   },
-  isActive: { type: Schema.Types.Boolean },
+  isActive: {
+    type: Schema.Types.Boolean,
+    default: true,
+  },
   bestSeller: {
     type: Schema.Types.Boolean,
     default: false,

@@ -3,12 +3,14 @@ const orders = require("../../../models/order");
 const get = async (req, res, nex) => {
   const { count } = req.query;
   try {
-    const allOrders = await orders.find();
+    const allOrders = await orders.find({}, null, {
+      sort: { createdAt: -1 },
+      limit: Number(count),
+    });
 
     res.json({
       message: "Fetched all orders",
-      allOrders: allOrders.reverse().splice(0, count),
-      totalOrders: allOrders.length,
+      allOrders: allOrders,
     });
   } catch (e) {
     console.log(e);

@@ -1,7 +1,7 @@
 const product = require("../../../models/products");
 const error = require("../../../utils/error");
 
-const allProductsByCategory = async (req, res, nex) => {
+const get = async (req, res, nex) => {
   const { category } = req.query;
 
   try {
@@ -17,4 +17,4 @@ const allProductsByCategory = async (req, res, nex) => {
   }
 };
 
-module.exports = allProductsByCategory;
+module.exports = { get: get };

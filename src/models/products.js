@@ -41,6 +41,7 @@ const otherProductsSchema = new Schema({
   },
   itemsInStock: {
     type: Schema.Types.Number,
+    default: 100,
     required: true,
   },
   bestSeller: {
@@ -51,11 +52,9 @@ const otherProductsSchema = new Schema({
     {
       star: {
         type: Schema.Types.Number,
-        required: true,
       },
       by: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: "users",
       },
     },

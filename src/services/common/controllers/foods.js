@@ -1,11 +1,11 @@
 const food = require("../../../models/food");
 const error = require("../../../utils/error");
 
-const allFoodsByRes = async (req, res, nex) => {
-  const { resId } = req.query;
+const get = async (req, res, nex) => {
+  const { id } = req.query;
 
   try {
-    const foods = await food.find({ restaurantId: resId });
+    const foods = await food.find({ restaurantId: id });
 
     res.json({
       statusCode: "200",
@@ -17,4 +17,4 @@ const allFoodsByRes = async (req, res, nex) => {
   }
 };
 
-module.exports = allFoodsByRes;
+module.exports = { get: get };

@@ -1,7 +1,7 @@
 const restaurant = require("../../../models/restaurant");
 const error = require("../../../utils/error");
 
-const allRestaurants = async (req, res, nex) => {
+const get = async (req, res, nex) => {
   try {
     const restaurants = await restaurant.find();
 
@@ -15,4 +15,4 @@ const allRestaurants = async (req, res, nex) => {
   }
 };
 
-module.exports = allRestaurants;
+module.exports = { get: get };

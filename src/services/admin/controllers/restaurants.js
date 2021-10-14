@@ -1,4 +1,5 @@
 const restaurants = require("../../../models/restaurant");
+const foods = require("../../../models/food");
 
 const create = async (req, res, nex) => {
   const { config } = req.body;
@@ -69,6 +70,7 @@ const deleteOne = async (req, res, nex) => {
   const { id } = req.query;
   try {
     await restaurants.deleteOne({ _id: id });
+    await foods.deleteMany({ restaurantId: id });
 
     res.json({
       statusCode: 200,
@@ -80,11 +82,12 @@ const deleteOne = async (req, res, nex) => {
 };
 
 const toggleAvailability = async (req, res, nex) => {
-  const { id } = req.body;
+  const { id, city } = req.body;
   try {
     const fetched = await restaurants.findById(id);
 
     fetched.isActive = !fetched.isActive;
+    fetched.city = city;
 
     const updated = await fetched.save();
 

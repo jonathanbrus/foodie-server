@@ -1,7 +1,7 @@
 const image = require("../../../models/sliders");
 const error = require("../../../utils/error");
 
-const getImages = async (req, res, nex) => {
+const get = async (req, res, nex) => {
   const { imageFor } = req.query;
 
   try {
@@ -17,4 +17,4 @@ const getImages = async (req, res, nex) => {
   }
 };
 
-module.exports = getImages;
+module.exports = { get: get };

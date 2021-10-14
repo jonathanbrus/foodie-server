@@ -22,6 +22,7 @@ const restaurantSchema = new Schema({
   },
   city: {
     type: Schema.Types.String,
+    default: "Nagercoil",
     required: true,
   },
   geoPoint: {
@@ -45,27 +46,26 @@ const restaurantSchema = new Schema({
   },
   offer: {
     type: Schema.Types.Number,
+    default: 20,
     required: true,
   },
   timing: {
     from: {
       type: Schema.Types.Number,
-      required: true,
+      default: 10,
     },
     to: {
       type: Schema.Types.Number,
-      required: true,
+      default: 22,
     },
   },
   rating: [
     {
       star: {
         type: Schema.Types.Number,
-        required: true,
       },
       by: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: "users",
       },
     },
