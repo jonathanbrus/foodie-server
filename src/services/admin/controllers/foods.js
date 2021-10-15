@@ -84,7 +84,9 @@ const toggleAvailability = async (req, res, nex) => {
 
     const updated = await fetched.save();
 
-    res.json(response(200, `Updated to ${updated.active}`, updated.active));
+    res.json(
+      response(200, `Updated to ${updated.active}`, `${updated.active}`)
+    );
   } catch (e) {
     res.json(response(500, "Something went wrong, try again later"));
   }
