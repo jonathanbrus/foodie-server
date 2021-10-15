@@ -1,5 +1,5 @@
 const food = require("../../../models/food");
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const get = async (req, res, nex) => {
   const { id } = req.query;
@@ -7,13 +7,9 @@ const get = async (req, res, nex) => {
   try {
     const foods = await food.find({ restaurantId: id });
 
-    res.json({
-      statusCode: "200",
-      message: "Fetched all foods",
-      foods: foods,
-    });
+    res.json(response(200, "Fetched all foods", foods));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 

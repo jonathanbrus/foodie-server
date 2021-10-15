@@ -1,5 +1,7 @@
 const sliders = require("../../../models/sliders");
 
+const response = require("../../../utils/response");
+
 const add = async (req, res, nex) => {
   const { imageFor, images } = req.body;
 
@@ -9,12 +11,9 @@ const add = async (req, res, nex) => {
       images: images,
     });
 
-    res.json({
-      message: "Added Image",
-      addedImage: addedImage,
-    });
+    res.json(response(200, "Added Image", addedImage));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 
@@ -24,11 +23,9 @@ const deleteOne = async (req, res, nex) => {
   try {
     await sliders.deleteOne({ _id: id });
 
-    res.json({
-      message: "Deleted image",
-    });
+    res.json(response(200, "Deleted the image successfully"));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 

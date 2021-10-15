@@ -1,5 +1,5 @@
 const image = require("../../../models/sliders");
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const get = async (req, res, nex) => {
   const { imageFor } = req.query;
@@ -7,13 +7,9 @@ const get = async (req, res, nex) => {
   try {
     const images = await image.findOne({ for: imageFor });
 
-    res.json({
-      statusCode: "200",
-      message: `Fetched images for ${imageFor}`,
-      images: images.images,
-    });
+    res.json(response(200, `Fetched images for ${imageFor}`, images.images));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 

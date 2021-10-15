@@ -55,7 +55,7 @@ const foodSchema = new Schema({
     type: Schema.Types.Number,
     required: true,
   },
-  packagingCharge: {
+  packingCharge: {
     type: Schema.Types.Number,
     default: 0,
     required: true,
@@ -70,7 +70,7 @@ const foodSchema = new Schema({
       default: 22,
     },
   },
-  isActive: {
+  active: {
     type: Schema.Types.Boolean,
     default: true,
   },

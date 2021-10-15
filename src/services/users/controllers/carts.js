@@ -1,7 +1,7 @@
 const carts = require("../../../models/cart");
-const otherProducts = require("../../../models/products");
+const otherProducts = require("../../../models/product");
 
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const myCart = async (req, res, nex) => {
   try {
@@ -32,12 +32,9 @@ const myCart = async (req, res, nex) => {
       ];
     }
 
-    res.json({
-      message: "Fetched cart items",
-      myCartItems: cart,
-    });
+    res.json(response(200, "Fetched cart items", cart));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -55,22 +52,16 @@ const addToCart = async (req, res, nex) => {
 
       const updatedCart = await existingCart.save();
 
-      res.json({
-        message: "added to cart",
-        updatedCart: updatedCart,
-      });
+      res.json(response(200, "added to cart", updatedCart));
     } else {
       const addedCart = await carts.create({
         userId: req.userId,
         cartItems: [{ productId: productId, quantity: quantity }],
       });
-      res.json({
-        message: "added to cart",
-        updatedCart: addedCart,
-      });
+      res.json(response(200, "added to cart", addedCart));
     }
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -86,12 +77,9 @@ const removeFromCart = async (req, res, nex) => {
 
     const updatedCart = await userCart.save();
 
-    res.json({
-      message: "Removed from cart",
-      updatedCart: updatedCart,
-    });
+    res.json(response(200, "Removed from cart", updatedCart));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -112,12 +100,9 @@ const modifyQuantity = async (req, res, nex) => {
 
     console.log(updatedCart);
 
-    res.json({
-      message: "Updated quantity",
-      updatedCart: updatedCart,
-    });
+    res.json(response(200, "Updated quantity", updatedCart));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 

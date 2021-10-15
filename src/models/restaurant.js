@@ -40,7 +40,7 @@ const restaurantSchema = new Schema({
     type: Schema.Types.Boolean,
     default: false,
   },
-  isActive: {
+  active: {
     type: Schema.Types.Boolean,
     default: true,
   },

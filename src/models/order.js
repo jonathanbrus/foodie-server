@@ -55,7 +55,7 @@ const orderSchema = new Schema(
     paymentMethod: {
       type: Schema.Types.String,
       enum: ["COD", "Online Payments"],
-      default: "Order placed",
+      default: "COD",
       required: true,
     },
     // paymentResult: {
@@ -95,7 +95,7 @@ const orderSchema = new Schema(
         "Delivered",
         "Canceled",
       ],
-      default: "Order placed",
+      default: "Order Placed",
       required: true,
     },
     deliveredAt: {

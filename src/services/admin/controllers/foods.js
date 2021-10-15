@@ -1,5 +1,7 @@
 const foods = require("../../../models/food");
 
+const response = require("../../../utils/response");
+
 const create = async (req, res, nex) => {
   const { config } = req.body;
 
@@ -14,26 +16,20 @@ const create = async (req, res, nex) => {
       toppings: config.toppings,
       sizes: config.sizes,
       buns: config.buns,
-      fixedPrice: config.fixedPrice.trim(),
-      offerPrice: config.offerPrice.trim(),
-      packagingCharge: config.packagingCharge.trim(),
-      availability: {
-        from: config.availabilityTiming.from.trim(),
-        to: config.availabilityTiming.to.trim(),
+      fixedPrice: Number(config.fixedPrice.trim()),
+      offerPrice: Number(config.offerPrice.trim()),
+      packingCharge: Number(config.packingCharge.trim()),
+      timing: {
+        from: Number(config.from.trim()),
+        to: Number(config.to.trim()),
       },
-      isActive: true,
       bestSeller: config.bestSeller,
-      rating: [],
       restaurantId: config.restaurantId.trim(),
     });
 
-    res.json({
-      statusCode: 200,
-      message: "Successfully deleted the food",
-      created: created,
-    });
+    res.json(response(200, "Successfully created the food", created));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 
@@ -52,23 +48,19 @@ const updateOne = async (req, res, nex) => {
     fetched.toppings = config.toppings || fetched.toppings;
     fetched.sizes = config.sizes || fetched.sizes;
     fetched.buns = config.buns || fetched.buns;
-    fetched.fixedPrice = config.fixedPrice || fetched.fixedPrice;
-    fetched.offerPrice = config.offerPrice || fetched.offerPrice;
-    fetched.packagingCharge = config.packagingCharge || fetched.packagingCharge;
-    fetched.availability.from =
-      config.availability.from || fetched.availability.from;
-    fetched.availability.to = config.availability.to || fetched.availability.to;
+    fetched.fixedPrice = Number(config.fixedPrice.trim()) || fetched.fixedPrice;
+    fetched.offerPrice = Number(config.offerPrice.trim()) || fetched.offerPrice;
+    fetched.packingCharge =
+      Number(config.packingCharge.trim()) || fetched.packingCharge;
+    fetched.timing.from = Number(config.from.trim()) || fetched.timing.from;
+    fetched.timing.to = Number(config.to.trim()) || fetched.timing.to;
     fetched.bestSeller = config.bestSeller || fetched.bestSeller;
 
     const updated = await fetched.save();
 
-    res.json({
-      statusCode: 200,
-      message: "Successfully deleted the food",
-      updated: updated,
-    });
+    res.json(response(200, "Successfully updated the food", updated));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 
@@ -77,12 +69,9 @@ const deleteOne = async (req, res, nex) => {
   try {
     await foods.deleteOne({ _id: id });
 
-    res.json({
-      statusCode: 200,
-      message: "Successfully deleted the food",
-    });
+    res.json(response(200, "Successfully deleted the food"));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 
@@ -91,16 +80,13 @@ const toggleAvailability = async (req, res, nex) => {
   try {
     const fetched = await foods.findById(id);
 
-    fetched.isActive = !fetched.isActive;
+    fetched.active = !fetched.active;
 
     const updated = await fetched.save();
 
-    res.json({
-      message: `Updated to ${updated.isActive}`,
-      updated: updated.isActive,
-    });
+    res.json(response(200, `Updated to ${updated.active}`, updated.active));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 

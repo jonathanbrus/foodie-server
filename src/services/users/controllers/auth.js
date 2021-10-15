@@ -5,7 +5,7 @@ const users = require("../../../models/user");
 
 // helper
 const generateToken = require("../../../utils/generateToken");
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const signIn = async (req, res, nex) => {
   const { email, password } = req.body;
@@ -14,24 +14,22 @@ const signIn = async (req, res, nex) => {
     const user = await users.findOne({ email: email });
 
     if (!user) {
-      throw error(
-        404,
-        "No user found with the email, try creating an account."
-      );
+      throw {
+        status: 404,
+        message: "No user found with the email, try creating an account.",
+      };
     }
 
     const passwordMatched = bcrypt.compareSync(password, user.password);
 
     if (!passwordMatched) {
-      throw error(401, "Password does not match, try again.");
+      throw { status: 401, message: "Password does not match, try again." };
     }
 
     const authToken = generateToken(user._id, user.email);
 
-    res.json({
-      statusCode: 200,
-      message: "User authenticated",
-      user: {
+    res.json(
+      response(200, "User authenticated", {
         name: user.name,
         email: user.email,
         emailVerified: user.emailVerified,
@@ -48,11 +46,11 @@ const signIn = async (req, res, nex) => {
             state: address.state,
           };
         }),
-      },
-      authToken: authToken,
-    });
+        authToken: authToken,
+      })
+    );
   } catch (e) {
-    res.json(e);
+    res.json(response(e.status, e.message));
   }
 };
 
@@ -63,7 +61,10 @@ const signUp = async (req, res, nex) => {
     const user = await users.findOne({ email: email });
 
     if (user) {
-      throw error(406, "User already exists with the same email.");
+      throw {
+        status: 406,
+        messagse: "User already exists with the same email.",
+      };
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -77,10 +78,8 @@ const signUp = async (req, res, nex) => {
 
     const authToken = generateToken(newUser._id, newUser.email);
 
-    res.json({
-      statusCode: 201,
-      message: "User created.",
-      user: {
+    res.json(
+      response(201, "User created.", {
         name: newUser.name,
         email: newUser.email,
         emailVerified: newUser.emailVerified,
@@ -88,11 +87,11 @@ const signUp = async (req, res, nex) => {
         phoneVerified: newUser.phoneVerified,
         primeMember: newUser.primeMember,
         addresses: newUser.addresses,
-      },
-      authToken: authToken,
-    });
+        authToken: authToken,
+      })
+    );
   } catch (e) {
-    res.json(e);
+    res.json(response(e.state, e.message));
   }
 };
 

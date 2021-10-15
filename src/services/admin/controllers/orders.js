@@ -1,4 +1,5 @@
 const orders = require("../../../models/order");
+const response = require("../../../utils/response");
 
 const get = async (req, res, nex) => {
   const { count } = req.query;
@@ -8,12 +9,9 @@ const get = async (req, res, nex) => {
       limit: Number(count),
     });
 
-    res.json({
-      message: "Fetched all orders",
-      allOrders: allOrders,
-    });
+    res.json(response(200, "Fetched all orders", allOrders));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 
@@ -36,12 +34,9 @@ const update = async (req, res, nex) => {
 
     const updated = await fetched.save();
 
-    res.json({
-      message: "Updated order successfully.",
-      updated: updated,
-    });
+    res.json(response(200, "Updated order successfully.", updated));
   } catch (e) {
-    console.log(e);
+    res.json(response(500, "Something went wrong, try again later"));
   }
 };
 

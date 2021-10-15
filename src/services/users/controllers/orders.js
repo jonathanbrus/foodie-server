@@ -1,18 +1,17 @@
 const orders = require("../../../models/order");
 const carts = require("../../../models/cart");
 
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const myOrders = async (req, res, nex) => {
   try {
-    const myAllOrders = await orders.find({ userId: req.userId });
-
-    res.json({
-      message: "Fetched all orders",
-      myOrders: myAllOrders.reverse(),
+    const myAllOrders = await orders.find({ userId: req.userId }, null, {
+      sort: { createdAt: -1 },
     });
+
+    res.json(response(200, "Fetched all orders", myAllOrders));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -71,12 +70,9 @@ const placeOrder = async (req, res, nex) => {
       await carts.deleteOne({ userId: req.userId });
     }
 
-    res.json({
-      message: "Order placed",
-      newOrder: newOrder,
-    });
+    res.json(response(200, "Order placed", newOrder));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -87,18 +83,16 @@ const cancelOrder = async (req, res, nex) => {
     const order = await orders.findById(orderId);
 
     if (!order) {
-      throw error(404, "Order not found.");
+      throw { status: 404, message: "Order not found." };
     }
 
     order.orderStatus = "Canceled" || order.orderStatus;
 
     await order.save();
 
-    res.json({
-      message: "Successfully canceled order",
-    });
+    res.json(response(200, "Successfully canceled order"));
   } catch (e) {
-    res.json(error(e));
+    res.json(response(e.status, e.message));
   }
 };
 

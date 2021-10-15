@@ -1,5 +1,5 @@
-const product = require("../../../models/products");
-const error = require("../../../utils/error");
+const product = require("../../../models/product");
+const response = require("../../../utils/response");
 
 const get = async (req, res, nex) => {
   const { category } = req.query;
@@ -7,13 +7,9 @@ const get = async (req, res, nex) => {
   try {
     const products = await product.find({ category: category });
 
-    res.json({
-      statusCode: "200",
-      message: `fetched ${category}`,
-      products: products,
-    });
+    res.json(response(200, `fetched ${category}`, products));
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 

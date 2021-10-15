@@ -1,6 +1,6 @@
 const users = require("../../../models/user");
 
-const error = require("../../../utils/error");
+const response = require("../../../utils/response");
 
 const updateProfile = async (req, res, nex) => {
   const { userId, name, email, phone } = req.body;
@@ -9,7 +9,7 @@ const updateProfile = async (req, res, nex) => {
     const user = await users.findById(userId);
 
     if (!user) {
-      throw error(404, "User not found.");
+      throw { status: 404, message: "User not found." };
     }
 
     user.name = name || user.name;
@@ -18,17 +18,16 @@ const updateProfile = async (req, res, nex) => {
 
     const updatedUser = await user.save();
 
-    res.json({
-      message: "Updated the profile successfully",
-      user: {
+    res.json(
+      response(200, "Updated the profile successfully", {
         userId: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
         phone: updatedUser.phone,
-      },
-    });
+      })
+    );
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -39,7 +38,7 @@ const addAddress = async (req, res, nex) => {
     const user = await users.findById(req.userId);
 
     if (!user) {
-      throw error(404, "User not found.");
+      throw { status: 404, message: "User not found." };
     }
 
     user.addresses.push({
@@ -53,12 +52,11 @@ const addAddress = async (req, res, nex) => {
 
     const updatedAddresses = await user.save();
 
-    res.json({
-      message: "Address added successfully",
-      addresses: updatedAddresses.addresses,
-    });
+    res.json(
+      response(200, "Address added successfully", updatedAddresses.addresses)
+    );
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(e.status, e.message));
   }
 };
 
@@ -79,7 +77,7 @@ const deleteAddress = async (req, res, nex) => {
       });
     }
   } catch (e) {
-    res.json(error(500, "Something went wrong"));
+    res.json(response(500, "Something went wrong"));
   }
 };
 
@@ -89,7 +87,7 @@ const changePassword = async (req, res, nex) => {
     const user = await users.findById(userId);
 
     if (!finduser) {
-      throw error(404, "User does not exist");
+      throw { status: 404, message: "User does not exist" };
     }
 
     const hashed = bcrypt.hashSync(password, 10);
@@ -97,12 +95,9 @@ const changePassword = async (req, res, nex) => {
     user.password = hashed;
     user.save();
 
-    res.json({
-      statusCode: 200,
-      message: "Succesfully changed password",
-    });
+    res.json(response(200, "Succesfully changed password"));
   } catch (e) {
-    res.json(e);
+    res.json(response(e.status, e.message));
   }
 };
 
