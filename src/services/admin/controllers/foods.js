@@ -43,7 +43,7 @@ const updateOne = async (req, res, nex) => {
     fetched.image = config.image.trim() || fetched.image;
     fetched.description = config.description.trim() || fetched.description;
     fetched.category = config.category.trim() || fetched.category;
-    fetched.veg = config.veg || fetched.veg;
+    fetched.veg = config.veg;
     fetched.addons = config.addons || fetched.addons;
     fetched.toppings = config.toppings || fetched.toppings;
     fetched.sizes = config.sizes || fetched.sizes;
@@ -54,7 +54,7 @@ const updateOne = async (req, res, nex) => {
       Number(config.packingCharge.trim()) || fetched.packingCharge;
     fetched.timing.from = Number(config.from.trim()) || fetched.timing.from;
     fetched.timing.to = Number(config.to.trim()) || fetched.timing.to;
-    fetched.bestSeller = config.bestSeller || fetched.bestSeller;
+    fetched.bestSeller = config.bestSeller;
 
     const updated = await fetched.save();
 

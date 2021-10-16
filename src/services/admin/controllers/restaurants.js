@@ -55,6 +55,7 @@ const updateOne = async (req, res, nex) => {
 
     res.json(response(200, "Updated the restaurant successfully!", updated));
   } catch (e) {
+    console.log(e);
     res.json(response(500, "Something went wrong, try again later"));
   }
 };
@@ -84,6 +85,7 @@ const toggleAvailability = async (req, res, nex) => {
       response(200, `Updated to ${updated.active}`, `${updated.active}`)
     );
   } catch (e) {
+    console.log(e);
     res.json(response(500, "Something went wrong, try again later"));
   }
 };

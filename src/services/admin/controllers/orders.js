@@ -28,6 +28,8 @@ const update = async (req, res, nex) => {
     fetched.paid = paid;
     fetched.orderStatus = orderStatus || fetched.orderStatus;
 
+    fetched.food = other.isFood || fetched.food;
+    fetched.packingCharge = other.packagingCharge || fetched.packingCharge || 0;
     fetched.taxAmount = other.taxPrice || fetched.taxAmount;
     fetched.deliveryCharge = other.deliveryPrice || fetched.deliveryCharge;
     fetched.totalAmount = other.totalPrice || fetched.totalAmount;
@@ -36,6 +38,7 @@ const update = async (req, res, nex) => {
 
     res.json(response(200, "Updated order successfully.", updated));
   } catch (e) {
+    console.log(e);
     res.json(response(500, "Something went wrong, try again later"));
   }
 };
