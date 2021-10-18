@@ -46,7 +46,7 @@ const updateOne = async (req, res, nex) => {
     fetched.geoPoint.lat = Number(config.lat.trim()) || fetched.geoPoint.lat;
     fetched.geoPoint.long = Number(config.long.trim()) || fetched.geoPoint.long;
     fetched.topPicks = config.topPicks || fetched.topPicks;
-    fetched.popular = config.popular || fetched.popular;
+    fetched.popular = config.popular;
     fetched.offer = Number(config.offer.trim()) || fetched.offer;
     fetched.timing.from = Number(config.from.trim()) || fetched.timing.from;
     fetched.timing.to = Number(config.to.trim()) || fetched.timing.to;

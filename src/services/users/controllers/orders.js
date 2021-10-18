@@ -58,7 +58,7 @@ const placeOrder = async (req, res, nex) => {
         state: parsedAddress["state"] || "Tamil Nadu",
       },
       paymentMethod: paymentMethod,
-      isPaid: false,
+      paid: false,
       taxAmount: taxAmount,
       deliveryCharge: deliveryCharge,
       packingCharge: packingCharge,
