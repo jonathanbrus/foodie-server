@@ -61,13 +61,8 @@ const restaurantSchema = new Schema({
   },
   rating: [
     {
-      star: {
-        type: Schema.Types.Number,
-      },
-      by: {
-        type: Schema.Types.ObjectId,
-        ref: "users",
-      },
+      type: Schema.Types.Number,
+      default: 4,
     },
   ],
 });
