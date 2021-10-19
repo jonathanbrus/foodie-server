@@ -50,6 +50,7 @@ const updateOne = async (req, res, nex) => {
     fetched.offer = Number(config.offer.trim()) || fetched.offer;
     fetched.timing.from = Number(config.from.trim()) || fetched.timing.from;
     fetched.timing.to = Number(config.to.trim()) || fetched.timing.to;
+    fetched.rating = config.rating;
 
     const updated = await fetched.save();
 
@@ -78,6 +79,7 @@ const toggleAvailability = async (req, res, nex) => {
     const fetched = await restaurants.findById(id);
 
     fetched.active = !fetched.active;
+    fetched.rating = 4.2;
 
     const updated = await fetched.save();
 
