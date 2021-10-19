@@ -42,11 +42,9 @@ const updateOne = async (req, res, nex) => {
     fetched.productDetail = config.productDetail || fetched.productDetail;
     fetched.category = category.trim() || fetched.category;
     fetched.subCategory = config.subCategory.trim() || fetched.subCategory;
-    fetched.fixedPrice = Number(config.fixedPrice.trim()) || fetched.fixedPrice;
-    fetched.offerPrice =
-      Number(config.offerPrice.trim()) || fetched.offerPrice.trim();
-    fetched.itemsInStock =
-      Number(config.itemsInStock.trim()) || fetched.itemsInStock;
+    fetched.fixedPrice = Number(config.fixedPrice.trim());
+    fetched.offerPrice = Number(config.offerPrice.trim());
+    fetched.itemsInStock = Number(config.itemsInStock.trim());
     fetched.bestSeller = config.bestSeller || fetched.bestSeller;
 
     const updated = await fetched.save();
