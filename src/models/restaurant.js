@@ -59,12 +59,10 @@ const restaurantSchema = new Schema({
       default: 22,
     },
   },
-  rating: [
-    {
-      type: Schema.Types.Number,
-      default: 4,
-    },
-  ],
+  rating: {
+    type: Schema.Types.Number,
+    default: 4,
+  },
 });
 
 module.exports = mongoose.model("restaurants", restaurantSchema);
