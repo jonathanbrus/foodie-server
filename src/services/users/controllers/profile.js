@@ -19,7 +19,7 @@ const updateProfile = async (req, res, nex) => {
     const updatedUser = await user.save();
 
     res.json(
-      response(200, "Updated the profile successfully", {
+      response(200, "Updated the profile successfully!", {
         userId: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
